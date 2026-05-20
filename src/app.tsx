@@ -1,13 +1,18 @@
 import "@mantine/core/styles.css";
 
-import { Button, MantineProvider, Stack, Text } from "@mantine/core";
+import { MantineProvider, Stack, Text } from "@mantine/core";
+import { FrameCrop } from "./components/frame-crop";
+import { VideoInput } from "./components/video-input";
 
 const App = () => {
   return (
-    <MantineProvider>
-      <Stack>
-        <Text>Hello Mantine!</Text>
-        <Button>Click me</Button>
+    <MantineProvider defaultColorScheme="dark">
+      <Stack h="100vh" display="flex">
+        <VideoInput />
+        <FrameCrop />
+        <Text px="xl" py="md">
+          Footer
+        </Text>
       </Stack>
     </MantineProvider>
   );
