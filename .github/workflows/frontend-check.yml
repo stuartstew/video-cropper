@@ -58,3 +58,6 @@ jobs:
 
       - name: Type check (TypeScript)
         run: pnpm typecheck
+
+      - name: Test (Vitest)
+        run: pnpm test
