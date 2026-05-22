@@ -1,25 +1,63 @@
 import { useState } from "react";
+import type { PercentCrop } from "react-image-crop";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export const useCrop = (imageWidth: number, imageHeight: number) => {
+export const useCrop = (imgWidth: number, imgHeight: number) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const [width, setWidth] = useState(1);
-  const [height, setHeight] = useState(1);
+  const [width, setWidth] = useState(imgWidth);
+  const [height, setHeight] = useState(imgHeight);
+  const [percentCrop, setPercentCrop] = useState<PercentCrop>();
+
+  const setPercentCropByPixel = (x: number, y: number, width: number, height: number) =>
+    setPercentCrop({
+      unit: "%",
+      x: (x / imgWidth) * 100,
+      y: (y / imgHeight) * 100,
+      width: (width / imgWidth) * 100,
+      height: (height / imgHeight) * 100,
+    });
+
+  const changePercentCrop = (value: PercentCrop) => {
+    setPercentCrop(value);
+    if (value.width === 0 || value.height === 0) {
+      setX(0);
+      setY(0);
+      setWidth(imgWidth);
+      setHeight(imgHeight);
+    } else {
+      setX(Math.round((value.x / 100) * imgWidth));
+      setY(Math.round((value.y / 100) * imgHeight));
+      setWidth(Math.round((value.width / 100) * imgWidth));
+      setHeight(Math.round((value.height / 100) * imgHeight));
+    }
+  };
 
   const changeX = (value: number) => {
-    const clampedValue = clamp(value, 0, imageWidth - 1);
-    setX(clampedValue);
-    setWidth(clamp(width, 1, imageWidth - clampedValue));
+    const newX = clamp(value, 0, imgWidth - 1);
+    setX(newX);
+    const newWidth = clamp(width, 1, imgWidth - newX);
+    setWidth(newWidth);
+    setPercentCropByPixel(newX, y, newWidth, height);
   };
   const changeY = (value: number) => {
-    const clampedValue = clamp(value, 0, imageHeight - 1);
-    setY(clampedValue);
-    setHeight(clamp(height, 1, imageHeight - clampedValue));
+    const newY = clamp(value, 0, imgHeight - 1);
+    setY(newY);
+    const newHeight = clamp(height, 1, imgHeight - newY);
+    setHeight(newHeight);
+    setPercentCropByPixel(x, newY, width, newHeight);
   };
-  const changeWidth = (value: number) => setWidth(clamp(value, 1, imageWidth - x));
-  const changeHeight = (value: number) => setHeight(clamp(value, 1, imageHeight - y));
+  const changeWidth = (value: number) => {
+    const newWidth = clamp(value, 1, imgWidth - x);
+    setWidth(newWidth);
+    setPercentCropByPixel(x, y, newWidth, height);
+  };
+  const changeHeight = (value: number) => {
+    const newHeight = clamp(value, 1, imgHeight - y);
+    setHeight(newHeight);
+    setPercentCropByPixel(x, y, width, newHeight);
+  };
 
-  return { x, y, width, height, changeX, changeY, changeWidth, changeHeight };
+  return { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop };
 };
