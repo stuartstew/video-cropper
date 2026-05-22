@@ -1,17 +1,16 @@
 import "@mantine/core/styles.css";
 
-import { Box, MantineProvider, Stack } from "@mantine/core";
+import { Box, Group, MantineProvider, Stack } from "@mantine/core";
 import { FrameCrop } from "./components/frame-crop";
+import { ResetButton } from "./components/reset-button";
 import { ROIInput } from "./components/roi-input";
 import { SaveButton } from "./components/save-button";
 import { VideoInput } from "./components/video-input";
 import { useCrop } from "./hooks/use-crop";
 
 const App = () => {
-  const { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop } = useCrop(
-    600,
-    400,
-  );
+  const { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop, reset } =
+    useCrop(600, 400);
 
   return (
     <MantineProvider defaultColorScheme="dark">
@@ -24,7 +23,7 @@ const App = () => {
           imgWidth={600}
           imgHeight={400}
         />
-        <Box px="xl" pt="md">
+        <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
           <ROIInput
             x={x}
             y={y}
@@ -35,10 +34,10 @@ const App = () => {
             onChangeWidth={changeWidth}
             onChangeHeight={changeHeight}
           />
-        </Box>
-        <Box px="xl" pt="md" pb="md">
+          <Box flex={1} />
+          <ResetButton onClick={reset} />
           <SaveButton />
-        </Box>
+        </Group>
       </Stack>
     </MantineProvider>
   );
