@@ -8,13 +8,22 @@ import { VideoInput } from "./components/video-input";
 import { useCrop } from "./hooks/use-crop";
 
 const App = () => {
-  const { x, y, width, height, changeX, changeY, changeWidth, changeHeight } = useCrop(600, 400);
+  const { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop } = useCrop(
+    600,
+    400,
+  );
 
   return (
     <MantineProvider defaultColorScheme="dark">
       <Stack h="100vh" display="flex" gap={0}>
         <VideoInput />
-        <FrameCrop />
+        <FrameCrop
+          percentCrop={percentCrop}
+          onChangePercentCrop={changePercentCrop}
+          imgSrc="https://placehold.co/600x400"
+          imgWidth={600}
+          imgHeight={400}
+        />
         <Box px="xl" pt="md">
           <ROIInput
             x={x}
