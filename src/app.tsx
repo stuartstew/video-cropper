@@ -14,7 +14,7 @@ const App = () => {
     <MantineProvider defaultColorScheme="dark">
       <Stack h="100vh" display="flex" gap={0}>
         <VideoInput />
-        <FrameCrop />
+        <FrameCrop imgSrc="https://placehold.co/600x400" imgWidth={600} imgHeight={400} />
         <Box px="xl" pt="md">
           <ROIInput
             x={x}
