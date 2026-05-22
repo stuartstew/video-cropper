@@ -59,5 +59,13 @@ export const useCrop = (imgWidth: number, imgHeight: number) => {
     setPercentCropByPixel(x, y, width, newHeight);
   };
 
-  return { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop };
+  const reset = () => {
+    setX(0);
+    setY(0);
+    setWidth(imgWidth);
+    setHeight(imgHeight);
+    setPercentCrop(undefined);
+  };
+
+  return { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop, reset };
 };
