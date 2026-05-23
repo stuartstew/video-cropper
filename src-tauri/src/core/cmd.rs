@@ -1,3 +1,5 @@
+#![warn(clippy::pedantic)]
+
 use ffmpeg_sidecar::command::FfmpegCommand;
 use image::{GenericImageView, ImageReader};
 use std::fs;
