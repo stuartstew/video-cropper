@@ -1,6 +1,7 @@
 import "@mantine/core/styles.css";
 
-import { Box, Group, MantineProvider, Stack } from "@mantine/core";
+import { Box, Group, MantineProvider, Overlay, Stack } from "@mantine/core";
+import { useState } from "react";
 import { FrameCrop } from "./components/frame-crop";
 import { ResetButton } from "./components/reset-button";
 import { ROIInput } from "./components/roi-input";
@@ -12,10 +13,16 @@ const App = () => {
   const { x, y, width, height, changeX, changeY, changeWidth, changeHeight, percentCrop, changePercentCrop, reset } =
     useCrop(600, 400);
 
+  const [videoPath, setVideoPath] = useState<string>();
+  const [overlay, setOverlay] = useState(false);
+
   return (
     <MantineProvider defaultColorScheme="dark">
+      {overlay && <Overlay backgroundOpacity={0} zIndex={1000} />}
       <Stack h="100vh" display="flex" gap={0}>
-        <VideoInput />
+        <Box px="xl" py="md">
+          <VideoInput value={videoPath} onChange={setVideoPath} onChangeOverlay={setOverlay} />
+        </Box>
         <FrameCrop
           percentCrop={percentCrop}
           onChangePercentCrop={changePercentCrop}
