@@ -1,1 +1,1 @@
-export { FrameCrop } from "./components/frame-crop";
+export { FrameCrop } from "./frame-crop";
