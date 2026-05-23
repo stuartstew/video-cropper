@@ -6,6 +6,8 @@ type Props = {
   onChangeOverlay: (value: boolean) => void;
 };
 
+const basename = (path: string) => path.replace(/^.*[\\/]/, "");
+
 export const VideoInput = ({ value, onChange, onChangeOverlay }: Props) => {
   const filters = [
     {
@@ -16,7 +18,7 @@ export const VideoInput = ({ value, onChange, onChangeOverlay }: Props) => {
 
   return (
     <FileInput
-      value={value}
+      value={value && basename(value)}
       onChange={onChange}
       label="Video"
       placeholder="Select a video file..."
