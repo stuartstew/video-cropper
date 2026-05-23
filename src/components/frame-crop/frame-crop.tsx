@@ -1,6 +1,6 @@
 import { Center, Image } from "@mantine/core";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
-import { useContain } from "../hooks/use-contain";
+import { useContain } from "./hooks/use-contain";
 
 import "react-image-crop/dist/ReactCrop.css";
 

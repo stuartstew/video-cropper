@@ -1,1 +1,1 @@
-export { ROIInput } from "./components/roi-input";
+export { ROIInput } from "./roi-input";

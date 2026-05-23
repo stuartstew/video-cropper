@@ -1,5 +1,5 @@
 import { Group } from "@mantine/core";
-import { NonNegativeIntegerInput } from "./non-negative-integer-input";
+import { NonNegativeIntegerInput } from "./components/non-negative-integer-input";
 
 type Props = {
   x: number;
