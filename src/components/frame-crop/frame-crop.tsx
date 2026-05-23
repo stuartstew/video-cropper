@@ -1,32 +1,33 @@
-import { Center, Image } from "@mantine/core";
-import ReactCrop, { type PercentCrop } from "react-image-crop";
-import { useContain } from "./hooks/use-contain";
+import { Center } from "@mantine/core";
+import { useRef } from "react";
+import type { PercentCrop } from "react-image-crop";
+import type { Frame } from "@/types/frame";
 
 import "react-image-crop/dist/ReactCrop.css";
+import { Cropper } from "./components/cropper";
 
 type Props = {
   percentCrop?: PercentCrop;
   onChangePercentCrop: (value: PercentCrop) => void;
-  imgSrc: string;
-  imgWidth: number;
-  imgHeight: number;
+  frameSize?: Frame;
+  loading: boolean;
+  imageKey: number;
 };
 
-export const FrameCrop = ({ percentCrop, onChangePercentCrop, imgSrc, imgWidth, imgHeight }: Props) => {
-  const { containerRef, renderedWidth, renderedHeight } = useContain(imgWidth, imgHeight);
+export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading, imageKey }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <Center ref={containerRef} display="flex" flex={1} bg="#000" style={{ overflow: "hidden" }}>
-      <ReactCrop
-        crop={percentCrop}
-        onChange={(_, value) => onChangePercentCrop(value)}
-        style={{ height: renderedHeight, width: renderedWidth }}
-        minWidth={1}
-        minHeight={1}
-        ruleOfThirds
-      >
-        <Image src={imgSrc} />
-      </ReactCrop>
+      {frameSize && !loading && (
+        <Cropper
+          percentCrop={percentCrop}
+          onChangePercentCrop={onChangePercentCrop}
+          containerRef={containerRef}
+          frameSize={frameSize}
+          imageKey={imageKey}
+        />
+      )}
     </Center>
   );
 };

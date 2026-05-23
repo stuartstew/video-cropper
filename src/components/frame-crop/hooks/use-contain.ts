@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 
-export const useContain = (imgWidth: number, imgHeight: number) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+export const useContain = (containerRef: RefObject<HTMLDivElement | null>, imgWidth: number, imgHeight: number) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
 
