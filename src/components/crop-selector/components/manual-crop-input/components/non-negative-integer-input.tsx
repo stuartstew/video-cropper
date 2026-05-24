@@ -5,11 +5,12 @@ type Props = {
   value: number;
   onChange: (value: number) => void;
   label?: React.ReactNode;
+  disabled?: boolean;
   size?: string;
   w?: string | number;
 };
 
-export const NonNegativeIntegerInput = ({ value, onChange, label, size, w }: Props) => {
+export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size, w }: Props) => {
   const { currentValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>((draft) => {
     const clampedValue = typeof draft === "number" ? draft : 0;
     onChange(clampedValue);
@@ -28,6 +29,7 @@ export const NonNegativeIntegerInput = ({ value, onChange, label, size, w }: Pro
       allowNegative={false}
       hideControls
       label={label}
+      disabled={disabled}
       size={size}
       w={w}
     />
