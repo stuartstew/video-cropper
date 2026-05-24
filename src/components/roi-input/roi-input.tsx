@@ -1,24 +1,29 @@
 import { Group } from "@mantine/core";
+import type { Crop } from "react-image-crop";
 import { NonNegativeIntegerInput } from "./components/non-negative-integer-input";
 
 type Props = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  onChangeX: (value: number) => void;
-  onChangeY: (value: number) => void;
-  onChangeWidth: (value: number) => void;
-  onChangeHeight: (value: number) => void;
+  crop: Crop;
+  onChangeCrop: (value: Crop) => void;
 };
 
-export const ROIInput = ({ x, y, width, height, onChangeX, onChangeY, onChangeWidth, onChangeHeight }: Props) => {
+export const ROIInput = ({ crop, onChangeCrop }: Props) => {
   return (
     <Group gap="xs">
-      <NonNegativeIntegerInput value={x} onChange={onChangeX} label="X" w={96} />
-      <NonNegativeIntegerInput value={y} onChange={onChangeY} label="Y" w={96} />
-      <NonNegativeIntegerInput value={width} onChange={onChangeWidth} label="Width" w={96} />
-      <NonNegativeIntegerInput value={height} onChange={onChangeHeight} label="Height" w={96} />
+      <NonNegativeIntegerInput value={crop.x} onChange={(x) => onChangeCrop({ ...crop, x })} label="X" w={96} />
+      <NonNegativeIntegerInput value={crop.y} onChange={(y) => onChangeCrop({ ...crop, y })} label="Y" w={96} />
+      <NonNegativeIntegerInput
+        value={crop.width}
+        onChange={(width) => onChangeCrop({ ...crop, width })}
+        label="Width"
+        w={96}
+      />
+      <NonNegativeIntegerInput
+        value={crop.height}
+        onChange={(height) => onChangeCrop({ ...crop, height })}
+        label="Height"
+        w={96}
+      />
     </Group>
   );
 };

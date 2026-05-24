@@ -1,92 +1,57 @@
 import { useState } from "react";
-import type { PercentCrop } from "react-image-crop";
+import type { Crop, PercentCrop } from "react-image-crop";
+import type { ImageSize } from "@/types/image-size";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export const useCrop = (imgWidth: number, imgHeight: number) => {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [width, setWidth] = useState(imgWidth);
-  const [height, setHeight] = useState(imgHeight);
+export const useCrop = (frameSize: ImageSize) => {
+  const [crop, setCrop] = useState<Crop>({ unit: "px", x: 0, y: 0, width: 0, height: 0 });
   const [percentCrop, setPercentCrop] = useState<PercentCrop>();
 
-  const setPercentCropByPixel = (x: number, y: number, width: number, height: number) =>
-    setPercentCrop({
-      unit: "%",
-      x: (x / imgWidth) * 100,
-      y: (y / imgHeight) * 100,
-      width: (width / imgWidth) * 100,
-      height: (height / imgHeight) * 100,
-    });
+  const pixelToPercent = (crop: Crop): PercentCrop => ({
+    unit: "%",
+    x: (crop.x / frameSize.width) * 100,
+    y: (crop.y / frameSize.height) * 100,
+    width: (crop.width / frameSize.width) * 100,
+    height: (crop.height / frameSize.height) * 100,
+  });
+
+  const percentToPixel = (percentCrop: PercentCrop): Crop =>
+    percentCrop.width === 0 || percentCrop.height === 0
+      ? { unit: "px", x: 0, y: 0, width: frameSize.width, height: frameSize.height }
+      : {
+          unit: "px",
+          x: Math.round((percentCrop.x / 100) * frameSize.width),
+          y: Math.round((percentCrop.y / 100) * frameSize.height),
+          width: Math.round((percentCrop.width / 100) * frameSize.width),
+          height: Math.round((percentCrop.height / 100) * frameSize.height),
+        };
+
+  const changeCrop = (value: Crop) => {
+    const newX = clamp(value.x, 0, frameSize.width - 1);
+    const newY = clamp(value.y, 0, frameSize.height - 1);
+    const newWidth = clamp(value.width, 1, frameSize.width - newX);
+    const newHeight = clamp(value.height, 1, frameSize.height - newY);
+    const newCrop: Crop = { unit: "px", x: newX, y: newY, width: newWidth, height: newHeight };
+    setCrop(newCrop);
+    setPercentCrop(pixelToPercent(newCrop));
+  };
 
   const changePercentCrop = (value: PercentCrop) => {
     setPercentCrop(value);
-    if (value.width === 0 || value.height === 0) {
-      setX(0);
-      setY(0);
-      setWidth(imgWidth);
-      setHeight(imgHeight);
-    } else {
-      setX(Math.round((value.x / 100) * imgWidth));
-      setY(Math.round((value.y / 100) * imgHeight));
-      setWidth(Math.round((value.width / 100) * imgWidth));
-      setHeight(Math.round((value.height / 100) * imgHeight));
-    }
+    setCrop(percentToPixel(value));
   };
 
-  const changeX = (value: number) => {
-    const newX = clamp(value, 0, imgWidth - 1);
-    setX(newX);
-    const newWidth = clamp(width, 1, imgWidth - newX);
-    setWidth(newWidth);
-    setPercentCropByPixel(newX, y, newWidth, height);
-  };
-  const changeY = (value: number) => {
-    const newY = clamp(value, 0, imgHeight - 1);
-    setY(newY);
-    const newHeight = clamp(height, 1, imgHeight - newY);
-    setHeight(newHeight);
-    setPercentCropByPixel(x, newY, width, newHeight);
-  };
-  const changeWidth = (value: number) => {
-    const newWidth = clamp(value, 1, imgWidth - x);
-    setWidth(newWidth);
-    setPercentCropByPixel(x, y, newWidth, height);
-  };
-  const changeHeight = (value: number) => {
-    const newHeight = clamp(value, 1, imgHeight - y);
-    setHeight(newHeight);
-    setPercentCropByPixel(x, y, width, newHeight);
-  };
-
-  const reset = () => {
-    setX(0);
-    setY(0);
-    setWidth(imgWidth);
-    setHeight(imgHeight);
-    setPercentCrop(undefined);
-  };
-
-  const changeFrameSize = (width: number, height: number) => {
-    setX(0);
-    setY(0);
-    setWidth(width);
-    setHeight(height);
+  const reset = (frameSize: ImageSize) => {
+    setCrop({ unit: "px", x: 0, y: 0, width: frameSize.width, height: frameSize.height });
     setPercentCrop(undefined);
   };
 
   return {
-    x,
-    y,
-    width,
-    height,
-    changeX,
-    changeY,
-    changeWidth,
-    changeHeight,
+    crop,
     percentCrop,
+    changeCrop,
     changePercentCrop,
     reset,
-    changeFrameSize,
   };
 };

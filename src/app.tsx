@@ -14,24 +14,11 @@ import type { ImageSize } from "./types/image-size";
 const App = () => {
   const [overlay, setOverlay] = useState(false);
   const [frameSize, setFrameSize] = useState<ImageSize>();
-  const {
-    x,
-    y,
-    width,
-    height,
-    changeX,
-    changeY,
-    changeWidth,
-    changeHeight,
-    percentCrop,
-    changePercentCrop,
-    reset,
-    changeFrameSize,
-  } = useCrop(frameSize?.width ?? 1, frameSize?.height ?? 1);
+  const { crop, percentCrop, changeCrop, changePercentCrop, reset } = useCrop(frameSize ?? { width: 0, height: 0 });
 
   const onChangeFrameSize = (size: ImageSize) => {
     setFrameSize(size);
-    changeFrameSize(size.width, size.height);
+    reset(size);
   };
 
   const { videoPath, loading, frameUrl, changeVideoPath } = useFrameExtraction(onChangeFrameSize);
@@ -51,18 +38,9 @@ const App = () => {
           frameUrl={frameUrl}
         />
         <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
-          <ROIInput
-            x={x}
-            y={y}
-            width={width}
-            height={height}
-            onChangeX={changeX}
-            onChangeY={changeY}
-            onChangeWidth={changeWidth}
-            onChangeHeight={changeHeight}
-          />
+          <ROIInput crop={crop} onChangeCrop={changeCrop} />
           <Box flex={1} />
-          <ResetButton onClick={reset} />
+          <ResetButton onClick={() => reset(frameSize ?? { width: 0, height: 0 })} />
           <SaveButton />
         </Group>
       </Stack>
