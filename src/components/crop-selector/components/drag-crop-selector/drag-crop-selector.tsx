@@ -14,7 +14,7 @@ type Props = {
   frameUrl?: string;
 };
 
-export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading, frameUrl }: Props) => {
+export const DragCropSelector = ({ percentCrop, onChangePercentCrop, frameSize, loading, frameUrl }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
