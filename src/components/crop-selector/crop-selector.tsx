@@ -29,6 +29,8 @@ export const CropSelector = ({
   onChangePercentCrop,
   onReset,
 }: Props) => {
+  const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
+
   return (
     <Stack h="100vh" display="flex" gap={0}>
       <DragCropSelector
@@ -41,7 +43,7 @@ export const CropSelector = ({
       <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
         <ManualCropInput crop={crop} onChangeCrop={onChangeCrop} disabled={loading || disabled} />
         <Box flex={1} />
-        <ResetButton onClick={onReset} disabled={loading || disabled} />
+        <ResetButton onClick={onReset} disabled={loading || disabled || isDefault} />
         <SaveButton disabled={loading || disabled} />
       </Group>
     </Stack>
