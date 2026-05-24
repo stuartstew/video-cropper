@@ -1,4 +1,3 @@
-import { Image } from "@mantine/core";
 import type { RefObject } from "react";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
 import type { ImageSize } from "@/types/image-size";
@@ -11,10 +10,10 @@ type Props = {
   onChangePercentCrop: (value: PercentCrop) => void;
   containerRef: RefObject<HTMLDivElement | null>;
   frameSize: ImageSize;
-  frameUrl?: string;
+  children?: React.ReactNode;
 };
 
-export const Cropper = ({ percentCrop, onChangePercentCrop, containerRef, frameSize, frameUrl }: Props) => {
+export const Cropper = ({ percentCrop, onChangePercentCrop, containerRef, frameSize, children }: Props) => {
   const { renderedWidth, renderedHeight } = useContain(containerRef, frameSize.width, frameSize.height);
 
   return (
@@ -26,7 +25,7 @@ export const Cropper = ({ percentCrop, onChangePercentCrop, containerRef, frameS
       minHeight={1}
       ruleOfThirds
     >
-      <Image src={frameUrl} />
+      {children}
     </ReactCrop>
   );
 };

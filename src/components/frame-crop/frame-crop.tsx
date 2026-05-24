@@ -1,4 +1,4 @@
-import { Center } from "@mantine/core";
+import { Center, Image } from "@mantine/core";
 import { useRef } from "react";
 import type { PercentCrop } from "react-image-crop";
 import type { ImageSize } from "@/types/image-size";
@@ -25,8 +25,9 @@ export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading
           onChangePercentCrop={onChangePercentCrop}
           containerRef={containerRef}
           frameSize={frameSize}
-          frameUrl={frameUrl}
-        />
+        >
+          <Image src={frameUrl} />
+        </Cropper>
       )}
     </Center>
   );
