@@ -27,14 +27,19 @@ impl serde::Serialize for Error {
 }
 
 #[derive(Debug, Clone, serde::Serialize)]
-pub struct FrameSize {
+pub struct FrameData {
     path: String,
+    size: ImageSize,
+}
+
+#[derive(Debug, Clone, Copy, serde::Serialize)]
+pub struct ImageSize {
     width: u32,
     height: u32,
 }
 
 #[command]
-pub async fn fetch_first_frame(app: AppHandle, path: String) -> Result<FrameSize, Error> {
+pub async fn extract_first_frame(app: AppHandle, path: String) -> Result<FrameData, Error> {
     let output = app.path().temp_dir()?.join("frame.png");
     let output_str = output.to_str().unwrap().to_string();
 
@@ -49,9 +54,9 @@ pub async fn fetch_first_frame(app: AppHandle, path: String) -> Result<FrameSize
 
     let img = ImageReader::open(&output)?.decode()?;
     let (width, height) = img.dimensions();
-    Ok(FrameSize {
+    let size = ImageSize { width, height };
+    Ok(FrameData {
         path: output_str,
-        width,
-        height,
+        size,
     })
 }

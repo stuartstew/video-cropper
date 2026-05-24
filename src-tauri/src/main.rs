@@ -10,7 +10,7 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![cmd::fetch_first_frame])
+        .invoke_handler(tauri::generate_handler![cmd::extract_first_frame])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

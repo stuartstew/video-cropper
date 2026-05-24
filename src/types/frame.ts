@@ -1,5 +1,6 @@
-export type Frame = {
+import type { ImageSize } from "./image-size";
+
+export type FrameData = {
   path: string;
-  width: number;
-  height: number;
+  size: ImageSize;
 };

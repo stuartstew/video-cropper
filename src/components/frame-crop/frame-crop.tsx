@@ -1,20 +1,20 @@
 import { Center } from "@mantine/core";
 import { useRef } from "react";
 import type { PercentCrop } from "react-image-crop";
-import type { Frame } from "@/types/frame";
+import type { ImageSize } from "@/types/image-size";
+import { Cropper } from "./components/cropper";
 
 import "react-image-crop/dist/ReactCrop.css";
-import { Cropper } from "./components/cropper";
 
 type Props = {
   percentCrop?: PercentCrop;
   onChangePercentCrop: (value: PercentCrop) => void;
-  frameSize?: Frame;
+  frameSize?: ImageSize;
   loading: boolean;
-  imageKey: number;
+  frameUrl?: string;
 };
 
-export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading, imageKey }: Props) => {
+export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading, frameUrl }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -25,7 +25,7 @@ export const FrameCrop = ({ percentCrop, onChangePercentCrop, frameSize, loading
           onChangePercentCrop={onChangePercentCrop}
           containerRef={containerRef}
           frameSize={frameSize}
-          imageKey={imageKey}
+          frameUrl={frameUrl}
         />
       )}
     </Center>
