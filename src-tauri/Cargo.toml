@@ -21,3 +21,4 @@ anyhow = "1.0.102"
 ffmpeg-sidecar = "2.5.1"
 image = { version = "0.25.10", features = ["png"] }
 thiserror = "2.0.18"
+tempfile = "3.27.0"

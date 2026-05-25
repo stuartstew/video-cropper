@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 
-import { Box, MantineProvider, Overlay, Stack } from "@mantine/core";
+import { Box, MantineProvider, Stack } from "@mantine/core";
 import { useState } from "react";
 import { CropSelector } from "./components/crop-selector";
 import { VideoInput } from "./components/video-input";
@@ -9,7 +9,6 @@ import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import type { ImageSize } from "./types/image-size";
 
 const App = () => {
-  const [overlay, setOverlay] = useState(false);
   const [frameSize, setFrameSize] = useState<ImageSize>();
   const { crop, percentCrop, changeCrop, changePercentCrop, reset } = useCrop(frameSize ?? { width: 0, height: 0 });
 
@@ -18,7 +17,7 @@ const App = () => {
     reset(size);
   };
 
-  const { videoPath, loading, frameUrl, changeVideoPath } = useFrameExtraction(onChangeFrameSize);
+  const { videoFile, loading, frameUrl, changeVideoFile } = useFrameExtraction(onChangeFrameSize);
 
   const handleReset = () => {
     if (frameSize) {
@@ -28,14 +27,13 @@ const App = () => {
 
   return (
     <MantineProvider defaultColorScheme="dark">
-      {overlay && <Overlay backgroundOpacity={0} zIndex={1000} />}
       <Stack h="100vh" display="flex" gap={0}>
         <Box px="xl" py="md">
-          <VideoInput value={videoPath} onChange={changeVideoPath} onChangeOverlay={setOverlay} />
+          <VideoInput value={videoFile} onChange={changeVideoFile} />
         </Box>
         <CropSelector
           loading={loading}
-          disabled={!videoPath}
+          disabled={!videoFile}
           frameSize={frameSize}
           frameUrl={frameUrl}
           crop={crop}
