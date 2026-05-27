@@ -17,8 +17,6 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Tauri(#[from] tauri::Error),
-    #[error(transparent)]
-    Image(#[from] image::ImageError),
 }
 
 impl serde::Serialize for Error {
