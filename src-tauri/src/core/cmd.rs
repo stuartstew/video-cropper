@@ -1,11 +1,13 @@
 #![warn(clippy::pedantic)]
 
-use std::{fs, io::Write};
+use std::io::{Read, Write};
 
+use anyhow::anyhow;
 use ffmpeg_sidecar::command::FfmpegCommand;
-use image::{GenericImageView, ImageReader};
-use tauri::{AppHandle, Manager, command};
+use tauri::command;
 use tempfile::NamedTempFile;
+
+use crate::core::cmd::Error::Anyhow;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -15,8 +17,6 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Tauri(#[from] tauri::Error),
-    #[error(transparent)]
-    Image(#[from] image::ImageError),
 }
 
 impl serde::Serialize for Error {
@@ -28,41 +28,26 @@ impl serde::Serialize for Error {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize)]
-pub struct FrameData {
-    path: String,
-    size: ImageSize,
-}
-
-#[derive(Debug, Clone, Copy, serde::Serialize)]
-pub struct ImageSize {
-    width: u32,
-    height: u32,
-}
-
 #[command]
-pub async fn extract_first_frame(app: AppHandle, input_bytes: Vec<u8>) -> Result<FrameData, Error> {
-    let output = app.path().temp_dir()?.join("frame.png");
-    let output_str = output.to_str().unwrap().to_string();
-
-    let _ = fs::remove_file(&output);
-
+pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error> {
     let mut tmp = NamedTempFile::new()?;
     tmp.write_all(&input_bytes)?;
     let tmp_path = tmp.path().to_owned();
 
-    FfmpegCommand::new()
+    let mut child = FfmpegCommand::new()
         .input(tmp_path.to_str().unwrap())
         .frames(1)
-        .output(&output_str)
-        .spawn()?
-        .wait()?;
+        .format("image2pipe")
+        .codec_video("png")
+        .output("pipe:1")
+        .spawn()?;
 
-    let img = ImageReader::open(&output)?.decode()?;
-    let (width, height) = img.dimensions();
-    let size = ImageSize { width, height };
-    Ok(FrameData {
-        path: output_str,
-        size,
-    })
+    let mut stdout = child
+        .take_stdout()
+        .ok_or(Anyhow(anyhow!("stdout unavailable")))?;
+
+    let mut output_bytes = vec![];
+    stdout.read_to_end(&mut output_bytes)?;
+
+    Ok(output_bytes)
 }
