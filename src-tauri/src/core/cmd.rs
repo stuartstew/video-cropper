@@ -1,9 +1,11 @@
 #![warn(clippy::pedantic)]
 
+use std::{fs, io::Write};
+
 use ffmpeg_sidecar::command::FfmpegCommand;
 use image::{GenericImageView, ImageReader};
-use std::fs;
 use tauri::{AppHandle, Manager, command};
+use tempfile::NamedTempFile;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -39,14 +41,18 @@ pub struct ImageSize {
 }
 
 #[command]
-pub async fn extract_first_frame(app: AppHandle, path: String) -> Result<FrameData, Error> {
+pub async fn extract_first_frame(app: AppHandle, input_bytes: Vec<u8>) -> Result<FrameData, Error> {
     let output = app.path().temp_dir()?.join("frame.png");
     let output_str = output.to_str().unwrap().to_string();
 
     let _ = fs::remove_file(&output);
 
+    let mut tmp = NamedTempFile::new()?;
+    tmp.write_all(&input_bytes)?;
+    let tmp_path = tmp.path().to_owned();
+
     FfmpegCommand::new()
-        .input(path)
+        .input(tmp_path.to_str().unwrap())
         .frames(1)
         .output(&output_str)
         .spawn()?

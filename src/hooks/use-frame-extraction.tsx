@@ -10,17 +10,20 @@ const filePathToUrlWithHash = (filePath: string) => {
 };
 
 export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void) => {
-  const [videoPath, setVideoPath] = useState<string>();
+  const [videoFile, setVideoFile] = useState<File>();
   const [loading, setLoading] = useState(false);
   const [frameUrl, setFrameUrl] = useState<string>();
 
-  const changeVideoPath = (value?: string) => {
-    if (!value) return;
+  const changeVideoFile = async (file?: File) => {
+    if (!file) return;
 
-    setVideoPath(value);
+    setVideoFile(file);
     setLoading(true);
 
-    invoke<FrameData>("extract_first_frame", { path: value })
+    const arrayBuffer = await file.arrayBuffer();
+    const bytes = Array.from(new Uint8Array(arrayBuffer));
+
+    invoke<FrameData>("extract_first_frame", { inputBytes: bytes })
       .then((frameData) => {
         onChangeFrameSize(frameData.size);
         setFrameUrl(filePathToUrlWithHash(frameData.path));
@@ -29,5 +32,7 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
       .finally(() => setLoading(false));
   };
 
-  return { videoPath, loading, frameUrl, changeVideoPath };
+  const closeVideoFile = () => setVideoFile(undefined);
+
+  return { videoFile, loading, frameUrl, changeVideoFile, closeVideoFile };
 };
