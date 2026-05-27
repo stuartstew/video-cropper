@@ -42,9 +42,7 @@ pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error>
         .output("pipe:1")
         .spawn()?;
 
-    let mut stdout = child
-        .take_stdout()
-        .ok_or(Anyhow(anyhow!("stdout unavailable")))?;
+    let mut stdout = child.take_stdout().ok_or(Anyhow(anyhow!("stdout unavailable")))?;
 
     let mut output_bytes = vec![];
     stdout.read_to_end(&mut output_bytes)?;
