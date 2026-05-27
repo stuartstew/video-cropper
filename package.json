@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@mantine/core": "^9.2.1",
+    "@mantine/dropzone": "^9.2.1",
+    "@phosphor-icons/react": "^2.1.10",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "~2.7.1",
     "@tauri-apps/plugin-opener": "^2",

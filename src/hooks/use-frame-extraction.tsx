@@ -32,5 +32,7 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
       .finally(() => setLoading(false));
   };
 
-  return { videoFile, loading, frameUrl, changeVideoFile };
+  const closeVideoFile = () => setVideoFile(undefined);
+
+  return { videoFile, loading, frameUrl, changeVideoFile, closeVideoFile };
 };
