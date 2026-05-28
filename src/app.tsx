@@ -3,10 +3,10 @@ import "@mantine/dropzone/styles.css";
 
 import { Box, Group, MantineProvider, Stack } from "@mantine/core";
 import { useState } from "react";
+import { CropButton } from "./components/crop-button";
 import { DragCropSelector } from "./components/drag-crop-selector";
 import { ManualCropInput } from "./components/manual-crop-input";
 import { ResetButton } from "./components/reset-button";
-import { SaveButton } from "./components/save-button";
 import { VideoDropzone } from "./components/video-dropzone";
 import { VideoTitleBar } from "./components/video-title-bar";
 import { useCrop } from "./hooks/use-crop";
@@ -54,7 +54,7 @@ const App = () => {
           <ManualCropInput crop={crop} onChangeCrop={changeCrop} disabled={loading || disabled} />
           <Box flex={1} />
           <ResetButton onClick={handleReset} disabled={loading || disabled || isDefault} />
-          <SaveButton disabled={loading || disabled} />
+          <CropButton disabled={loading || disabled} />
         </Group>
       </Stack>
     </MantineProvider>
