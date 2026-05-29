@@ -11,6 +11,7 @@ import { VideoDropzone } from "./components/video-dropzone";
 import { VideoTitleBar } from "./components/video-title-bar";
 import { useCrop } from "./hooks/use-crop";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
+import { useSaveCrop } from "./hooks/use-save-crop";
 import type { ImageSize } from "./types/image-size";
 
 const App = () => {
@@ -33,6 +34,13 @@ const App = () => {
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
+  const { saveCrop } = useSaveCrop();
+  const handleSaveCrop = () => {
+    if (videoFile) {
+      saveCrop(videoFile, crop);
+    }
+  };
+
   return (
     <MantineProvider defaultColorScheme="dark">
       <Stack h="100vh" display="flex" gap={0}>
@@ -54,7 +62,7 @@ const App = () => {
           <ManualCropInput crop={crop} onChangeCrop={changeCrop} disabled={loading || disabled} />
           <Box flex={1} />
           <ResetButton onClick={handleReset} disabled={loading || disabled || isDefault} />
-          <CropButton disabled={loading || disabled} />
+          <CropButton onClick={handleSaveCrop} disabled={loading || disabled} />
         </Group>
       </Stack>
     </MantineProvider>
