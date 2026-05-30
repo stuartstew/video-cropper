@@ -1,13 +1,14 @@
 import { Modal, Progress, Text } from "@mantine/core";
+import type { ProcessStatus } from "@/types/process-status";
 
 type Props = {
-  opened: boolean;
-  progress: number;
+  processStatus: ProcessStatus;
 };
 
-export const ProgressModal = ({ opened, progress }: Props) => {
+export const ProgressModal = ({ processStatus }: Props) => {
+  const progress = processStatus.status === "processing" ? processStatus.progress : 0;
   return (
-    <Modal opened={opened} onClose={() => {}} withCloseButton={false} centered>
+    <Modal opened={processStatus.status === "processing"} onClose={() => {}} withCloseButton={false} centered>
       <Text mb="md" ta="center">
         Cropping...
       </Text>

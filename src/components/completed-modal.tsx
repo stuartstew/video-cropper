@@ -1,14 +1,14 @@
 import { Anchor, Group, Modal, Text, ThemeIcon } from "@mantine/core";
 import { CheckIcon } from "@phosphor-icons/react";
 import { revealItemInDir } from "@tauri-apps/plugin-opener";
+import type { ProcessStatus } from "@/types/process-status";
 
 type Props = {
-  opened: boolean;
+  processStatus: ProcessStatus;
   onClose: () => void;
-  outputPath: string;
 };
 
-export const CompletedModal = ({ opened, onClose, outputPath }: Props) => {
+export const CompletedModal = ({ processStatus, onClose }: Props) => {
   const title = (
     <Group gap="sm">
       <ThemeIcon radius="xl" size="sm" color="teal">
@@ -18,10 +18,14 @@ export const CompletedModal = ({ opened, onClose, outputPath }: Props) => {
     </Group>
   );
 
-  const handleClickAnchor = async () => await revealItemInDir(outputPath);
+  const handleClickAnchor = async () => {
+    if (processStatus.status === "completed") {
+      await revealItemInDir(processStatus.path);
+    }
+  };
 
   return (
-    <Modal opened={opened} onClose={onClose} title={title} centered style={{ minWidth: 0, overflow: "hidden" }}>
+    <Modal opened={processStatus.status === "completed"} onClose={onClose} title={title} centered>
       <Text>
         The cropped video has been saved{" "}
         <Anchor href="#" onClick={handleClickAnchor}>

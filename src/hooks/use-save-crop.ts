@@ -5,12 +5,10 @@ import { extname } from "@tauri-apps/api/path";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useState } from "react";
 import type { Crop } from "react-image-crop";
+import type { ProcessStatus } from "@/types/process-status";
 
 export const useSaveCrop = () => {
-  const [processing, setProcessing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [completed, setCompleted] = useState(false);
-  const [outputPath, setOutputPath] = useState("");
+  const [processStatus, setProcessStatus] = useState<ProcessStatus>({ status: "idle" });
 
   const saveCrop = async (videoFile: FileWithPath, crop: Crop) => {
     const extension = await extname(videoFile.name);
@@ -28,23 +26,22 @@ export const useSaveCrop = () => {
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
 
     const frameCount = (await invoke<number | null>("fetch_frame_count", { inputBytes })) ?? 1;
+    const unlisten = await listen<number>("frame", (event) =>
+      setProcessStatus({ status: "processing", progress: (event.payload / frameCount) * 100 }),
+    );
 
-    const unlisten = await listen<number>("frame", (event) => setProgress((event.payload / frameCount) * 100));
-
-    setProgress(0);
-    setProcessing(true);
-    setOutputPath(path);
+    setProcessStatus({ status: "processing", progress: 0 });
 
     invoke("save_cropped_video", { inputBytes, crop, outputPath: path })
-      .then(() => setCompleted(true))
-      .catch((e) => console.error(e))
-      .finally(() => {
-        unlisten();
-        setProcessing(false);
-      });
+      .then(() => setProcessStatus({ status: "completed", path }))
+      .catch((e) => {
+        console.error(e);
+        setProcessStatus({ status: "idle" });
+      })
+      .finally(unlisten);
   };
 
-  const closeCompletedModal = () => setCompleted(false);
+  const closeCompletedModal = () => setProcessStatus({ status: "idle" });
 
-  return { processing, progress, completed, outputPath, saveCrop, closeCompletedModal };
+  return { processStatus, saveCrop, closeCompletedModal };
 };
