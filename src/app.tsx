@@ -3,14 +3,17 @@ import "@mantine/dropzone/styles.css";
 
 import { Box, Group, MantineProvider, Stack } from "@mantine/core";
 import { useState } from "react";
+import { CompletedModal } from "./components/completed-modal";
+import { CropButton } from "./components/crop-button";
 import { DragCropSelector } from "./components/drag-crop-selector";
 import { ManualCropInput } from "./components/manual-crop-input";
+import { ProgressModal } from "./components/progress-modal";
 import { ResetButton } from "./components/reset-button";
-import { SaveButton } from "./components/save-button";
 import { VideoDropzone } from "./components/video-dropzone";
 import { VideoTitleBar } from "./components/video-title-bar";
 import { useCrop } from "./hooks/use-crop";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
+import { useSaveCrop } from "./hooks/use-save-crop";
 import type { ImageSize } from "./types/image-size";
 
 const App = () => {
@@ -33,8 +36,17 @@ const App = () => {
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
+  const { processStatus, saveCrop, closeCompletedModal } = useSaveCrop();
+  const handleSaveCrop = () => {
+    if (videoFile) {
+      saveCrop(videoFile, crop);
+    }
+  };
+
   return (
     <MantineProvider defaultColorScheme="dark">
+      <CompletedModal processStatus={processStatus} onClose={closeCompletedModal} />
+      <ProgressModal processStatus={processStatus} />
       <Stack h="100vh" display="flex" gap={0}>
         {!loading && videoFile ? (
           <>
@@ -54,7 +66,7 @@ const App = () => {
           <ManualCropInput crop={crop} onChangeCrop={changeCrop} disabled={loading || disabled} />
           <Box flex={1} />
           <ResetButton onClick={handleReset} disabled={loading || disabled || isDefault} />
-          <SaveButton disabled={loading || disabled} />
+          <CropButton onClick={handleSaveCrop} disabled={loading || disabled} />
         </Group>
       </Stack>
     </MantineProvider>

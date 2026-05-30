@@ -1,9 +1,9 @@
 import { Box, Group, Text } from "@mantine/core";
-import { Dropzone } from "@mantine/dropzone";
+import { Dropzone, type FileWithPath } from "@mantine/dropzone";
 import { UploadSimpleIcon, VideoIcon, XIcon } from "@phosphor-icons/react";
 
 type Props = {
-  onChangeVideoFile: (value: File) => void;
+  onChangeVideoFile: (value: FileWithPath) => void;
   loading: boolean;
 };
 
