@@ -1,5 +1,6 @@
 import type { FileWithPath } from "@mantine/dropzone";
 import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { extname } from "@tauri-apps/api/path";
 import { save } from "@tauri-apps/plugin-dialog";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import type { Crop } from "react-image-crop";
 
 export const useSaveCrop = () => {
   const [processing, setProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const saveCrop = async (videoFile: FileWithPath, crop: Crop) => {
     const extension = await extname(videoFile.name);
@@ -23,12 +25,20 @@ export const useSaveCrop = () => {
     const arrayBuffer = await videoFile.arrayBuffer();
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
 
+    const frameCount = (await invoke<number | null>("fetch_frame_count", { inputBytes })) ?? 1;
+
+    const unlisten = await listen<number>("frame", (event) => setProgress((event.payload / frameCount) * 100));
+
+    setProgress(0);
     setProcessing(true);
 
     invoke("save_cropped_video", { inputBytes, crop, outputPath })
       .catch((e) => console.error(e))
-      .finally(() => setProcessing(false));
+      .finally(() => {
+        unlisten();
+        setProcessing(false);
+      });
   };
 
-  return { processing, saveCrop };
+  return { processing, progress, saveCrop };
 };

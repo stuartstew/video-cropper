@@ -35,7 +35,7 @@ const App = () => {
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
-  const { processing, saveCrop } = useSaveCrop();
+  const { processing, progress, saveCrop } = useSaveCrop();
   const handleSaveCrop = () => {
     if (videoFile) {
       saveCrop(videoFile, crop);
@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <MantineProvider defaultColorScheme="dark">
-      <ProgressModal opened={processing} />
+      <ProgressModal opened={processing} progress={progress} />
       <Stack h="100vh" display="flex" gap={0}>
         {!loading && videoFile ? (
           <>

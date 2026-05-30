@@ -10,7 +10,11 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![cmd::extract_first_frame, cmd::save_cropped_video])
+        .invoke_handler(tauri::generate_handler![
+            cmd::extract_first_frame,
+            cmd::fetch_frame_count,
+            cmd::save_cropped_video
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
