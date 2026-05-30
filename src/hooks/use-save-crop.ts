@@ -22,6 +22,8 @@ export const useSaveCrop = () => {
 
     if (!path) return;
 
+    setProcessStatus({ status: "processing", progress: 0 });
+
     const arrayBuffer = await videoFile.arrayBuffer();
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
 
@@ -33,8 +35,6 @@ export const useSaveCrop = () => {
     const unlisten = await listen<number>("frame", (event) =>
       setProcessStatus({ status: "processing", progress: (event.payload / frameCount) * 100 }),
     );
-
-    setProcessStatus({ status: "processing", progress: 0 });
 
     invoke("save_cropped_video", { inputBytes, crop, outputPath: path })
       .then(() => setProcessStatus({ status: "completed", path }))
