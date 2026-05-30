@@ -25,7 +25,11 @@ export const useSaveCrop = () => {
     const arrayBuffer = await videoFile.arrayBuffer();
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
 
-    const frameCount = (await invoke<number | null>("fetch_frame_count", { inputBytes })) ?? 1;
+    const frameCount = await invoke<number>("fetch_frame_count", { inputBytes }).catch((e) => {
+      console.error(e);
+      return 1;
+    });
+
     const unlisten = await listen<number>("frame", (event) =>
       setProcessStatus({ status: "processing", progress: (event.payload / frameCount) * 100 }),
     );
