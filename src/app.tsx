@@ -6,6 +6,7 @@ import { useState } from "react";
 import { CropButton } from "./components/crop-button";
 import { DragCropSelector } from "./components/drag-crop-selector";
 import { ManualCropInput } from "./components/manual-crop-input";
+import { ProgressModal } from "./components/progress-modal";
 import { ResetButton } from "./components/reset-button";
 import { VideoDropzone } from "./components/video-dropzone";
 import { VideoTitleBar } from "./components/video-title-bar";
@@ -34,7 +35,7 @@ const App = () => {
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
-  const { saveCrop } = useSaveCrop();
+  const { processing, saveCrop } = useSaveCrop();
   const handleSaveCrop = () => {
     if (videoFile) {
       saveCrop(videoFile, crop);
@@ -43,6 +44,7 @@ const App = () => {
 
   return (
     <MantineProvider defaultColorScheme="dark">
+      <ProgressModal opened={processing} />
       <Stack h="100vh" display="flex" gap={0}>
         {!loading && videoFile ? (
           <>

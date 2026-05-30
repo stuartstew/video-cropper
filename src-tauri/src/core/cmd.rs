@@ -49,3 +49,29 @@ pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error>
 
     Ok(output_bytes)
 }
+
+#[derive(Debug, Clone, Copy, serde::Deserialize)]
+pub struct Crop {
+    x: u32,
+    y: u32,
+    width: u32,
+    height: u32,
+}
+
+#[command]
+pub async fn save_cropped_video(input_bytes: Vec<u8>, crop: Crop, output_path: String) -> Result<(), Error> {
+    let mut tmp = NamedTempFile::new()?;
+    tmp.write_all(&input_bytes)?;
+    let tmp_path = tmp.path().to_owned();
+
+    FfmpegCommand::new()
+        .input(tmp_path.to_str().unwrap())
+        .arg("-vf")
+        .arg(format!("crop={}:{}:{}:{}", crop.width, crop.height, crop.x, crop.y))
+        .overwrite()
+        .output(&output_path)
+        .spawn()?
+        .wait()?;
+
+    Ok(())
+}
