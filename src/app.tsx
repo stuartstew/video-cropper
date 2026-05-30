@@ -3,6 +3,7 @@ import "@mantine/dropzone/styles.css";
 
 import { Box, Group, MantineProvider, Stack } from "@mantine/core";
 import { useState } from "react";
+import { CompletedModal } from "./components/completed-modal";
 import { CropButton } from "./components/crop-button";
 import { DragCropSelector } from "./components/drag-crop-selector";
 import { ManualCropInput } from "./components/manual-crop-input";
@@ -35,7 +36,7 @@ const App = () => {
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
-  const { processing, progress, saveCrop } = useSaveCrop();
+  const { processing, progress, completed, outputPath, saveCrop, closeCompletedModal } = useSaveCrop();
   const handleSaveCrop = () => {
     if (videoFile) {
       saveCrop(videoFile, crop);
@@ -44,6 +45,7 @@ const App = () => {
 
   return (
     <MantineProvider defaultColorScheme="dark">
+      <CompletedModal opened={completed} onClose={closeCompletedModal} outputPath={outputPath} />
       <ProgressModal opened={processing} progress={progress} />
       <Stack h="100vh" display="flex" gap={0}>
         {!loading && videoFile ? (

@@ -9,10 +9,12 @@ import type { Crop } from "react-image-crop";
 export const useSaveCrop = () => {
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [completed, setCompleted] = useState(false);
+  const [outputPath, setOutputPath] = useState("");
 
   const saveCrop = async (videoFile: FileWithPath, crop: Crop) => {
     const extension = await extname(videoFile.name);
-    const outputPath = await save({
+    const path = await save({
       defaultPath: videoFile.path,
       filters: [
         { name: `${extension.toUpperCase()} Files`, extensions: [extension] },
@@ -20,7 +22,7 @@ export const useSaveCrop = () => {
       ],
     });
 
-    if (!outputPath) return;
+    if (!path) return;
 
     const arrayBuffer = await videoFile.arrayBuffer();
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
@@ -31,8 +33,10 @@ export const useSaveCrop = () => {
 
     setProgress(0);
     setProcessing(true);
+    setOutputPath(path);
 
-    invoke("save_cropped_video", { inputBytes, crop, outputPath })
+    invoke("save_cropped_video", { inputBytes, crop, outputPath: path })
+      .then(() => setCompleted(true))
       .catch((e) => console.error(e))
       .finally(() => {
         unlisten();
@@ -40,5 +44,7 @@ export const useSaveCrop = () => {
       });
   };
 
-  return { processing, progress, saveCrop };
+  const closeCompletedModal = () => setCompleted(false);
+
+  return { processing, progress, completed, outputPath, saveCrop, closeCompletedModal };
 };
