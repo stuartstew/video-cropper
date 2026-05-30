@@ -78,7 +78,7 @@ pub async fn fetch_frame_count(input_bytes: Vec<u8>) -> Result<u32, Error> {
 }
 
 fn extract_frame_count_from_ffmpeg_stderr(buffer: &str) -> Option<u32> {
-    let re = Regex::new(r"frame=\s*([0-9]+)").unwrap();
+    let re = Regex::new(r"frame=\s*(\d+)").unwrap();
     buffer.lines().find_map(|line| re.captures(line).and_then(|caps| caps.get(1).unwrap().as_str().parse().ok()))
 }
 
