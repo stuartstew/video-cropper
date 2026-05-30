@@ -8,8 +8,6 @@ use regex::Regex;
 use tauri::{AppHandle, Emitter, command};
 use tempfile::{NamedTempFile, TempPath};
 
-use crate::core::cmd::Error::Anyhow;
-
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error(transparent)]
@@ -48,7 +46,7 @@ pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error>
         .output("pipe:1")
         .spawn()?;
 
-    let mut stdout = child.take_stdout().ok_or(Anyhow(anyhow!("stdout unavailable")))?;
+    let mut stdout = child.take_stdout().ok_or(Error::Anyhow(anyhow!("stdout unavailable")))?;
 
     let mut output_bytes = vec![];
     stdout.read_to_end(&mut output_bytes)?;
@@ -68,13 +66,13 @@ pub async fn fetch_frame_count(input_bytes: Vec<u8>) -> Result<u32, Error> {
         .output("pipe:1")
         .spawn()?;
 
-    let mut stderr = child.take_stderr().ok_or(Anyhow(anyhow!("stderr unavailable")))?;
+    let mut stderr = child.take_stderr().ok_or(Error::Anyhow(anyhow!("stderr unavailable")))?;
 
     let mut buffer = String::new();
     stderr.read_to_string(&mut buffer)?;
 
     extract_frame_count_from_ffmpeg_stderr(&buffer)
-        .ok_or(Anyhow(anyhow!("cannot extract frame count from ffmpeg stderr")))
+        .ok_or(Error::Anyhow(anyhow!("cannot extract frame count from ffmpeg stderr")))
 }
 
 fn extract_frame_count_from_ffmpeg_stderr(buffer: &str) -> Option<u32> {
