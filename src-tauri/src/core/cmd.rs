@@ -81,7 +81,7 @@ fn extract_frame_count_from_ffmpeg_stderr(buffer: &str) -> Option<u32> {
 }
 
 #[derive(Debug, Clone, Copy, serde::Deserialize)]
-pub struct Crop {
+pub struct PixelCrop {
     x: u32,
     y: u32,
     width: u32,
@@ -92,7 +92,7 @@ pub struct Crop {
 pub async fn save_cropped_video(
     app: AppHandle,
     input_bytes: Vec<u8>,
-    crop: Crop,
+    pixel_crop: PixelCrop,
     output_path: String,
 ) -> Result<(), Error> {
     let input_path = create_tempfile(&input_bytes)?;
@@ -100,7 +100,7 @@ pub async fn save_cropped_video(
     let iter = FfmpegCommand::new()
         .input(input_path.to_str().unwrap())
         .arg("-vf")
-        .arg(format!("crop={}:{}:{}:{}", crop.width, crop.height, crop.x, crop.y))
+        .arg(format!("crop={}:{}:{}:{}", pixel_crop.width, pixel_crop.height, pixel_crop.x, pixel_crop.y))
         .overwrite()
         .output(&output_path)
         .spawn()?

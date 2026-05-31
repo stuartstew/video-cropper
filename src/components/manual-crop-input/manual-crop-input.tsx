@@ -1,40 +1,40 @@
 import { Group } from "@mantine/core";
-import type { Crop } from "react-image-crop";
+import type { PixelCrop } from "react-image-crop";
 import { NonNegativeIntegerInput } from "./components/non-negative-integer-input";
 
 type Props = {
-  crop: Crop;
-  onChangeCrop: (value: Crop) => void;
+  pixelCrop: PixelCrop;
+  onChangePixelCrop: (value: PixelCrop) => void;
   disabled?: boolean;
 };
 
-export const ManualCropInput = ({ crop, onChangeCrop, disabled }: Props) => {
+export const ManualCropInput = ({ pixelCrop, onChangePixelCrop, disabled }: Props) => {
   return (
     <Group gap="xs">
       <NonNegativeIntegerInput
-        value={crop.x}
-        onChange={(x) => onChangeCrop({ ...crop, x })}
+        value={pixelCrop.x}
+        onChange={(x) => onChangePixelCrop({ ...pixelCrop, x })}
         label="X"
         disabled={disabled}
         w={96}
       />
       <NonNegativeIntegerInput
-        value={crop.y}
-        onChange={(y) => onChangeCrop({ ...crop, y })}
+        value={pixelCrop.y}
+        onChange={(y) => onChangePixelCrop({ ...pixelCrop, y })}
         label="Y"
         disabled={disabled}
         w={96}
       />
       <NonNegativeIntegerInput
-        value={crop.width}
-        onChange={(width) => onChangeCrop({ ...crop, width })}
+        value={pixelCrop.width}
+        onChange={(width) => onChangePixelCrop({ ...pixelCrop, width })}
         label="Width"
         disabled={disabled}
         w={96}
       />
       <NonNegativeIntegerInput
-        value={crop.height}
-        onChange={(height) => onChangeCrop({ ...crop, height })}
+        value={pixelCrop.height}
+        onChange={(height) => onChangePixelCrop({ ...pixelCrop, height })}
         label="Height"
         disabled={disabled}
         w={96}

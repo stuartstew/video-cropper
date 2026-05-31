@@ -1,8 +1,8 @@
 import type { FileWithPath } from "@mantine/dropzone";
 import { invoke } from "@tauri-apps/api/core";
+import type { ImageSize } from "@tauri-apps/api/image";
 import { Image } from "@tauri-apps/api/image";
 import { useState } from "react";
-import type { ImageSize } from "@/types/image-size";
 
 export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void) => {
   const [videoFile, setVideoFile] = useState<FileWithPath>();
