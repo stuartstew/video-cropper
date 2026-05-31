@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { extname } from "@tauri-apps/api/path";
 import { save } from "@tauri-apps/plugin-dialog";
+import { error, warn } from "@tauri-apps/plugin-log";
 import { useState } from "react";
 import type { PixelCrop } from "react-image-crop";
 import type { ProcessStatus } from "@/types/process-status";
@@ -28,7 +29,8 @@ export const useSaveCrop = () => {
     const inputBytes = Array.from(new Uint8Array(arrayBuffer));
 
     const frameCount = await invoke<number>("fetch_frame_count", { inputBytes }).catch((e) => {
-      console.error(e);
+      warn(e);
+      warn("failed to fetch the frame count");
       return 1;
     });
 
@@ -39,7 +41,8 @@ export const useSaveCrop = () => {
     invoke("save_cropped_video", { inputBytes, pixelCrop, outputPath: path })
       .then(() => setProcessStatus({ status: "completed", path }))
       .catch((e) => {
-        console.error(e);
+        error(e);
+        error("failed to save the cropped video");
         setProcessStatus({ status: "idle" });
       })
       .finally(unlisten);
