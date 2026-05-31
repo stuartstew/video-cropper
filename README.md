@@ -1,7 +1,33 @@
-# Tauri + React + Typescript
+<div align="center">
+  <img width="128" src="./src-tauri/icons/icon.png" alt="Video Cropper">
+  <br />
+  <h1 align="center">Video Cropper</h1>
+</div>
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+Video Cropper is a desktop app that allows you to crop videos.
 
-## Recommended IDE Setup
+## Development
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+### Prerequisites
+
+- Node.js 24+
+- pnpm 11+
+- Rust 1.95+
+- [System dependencies for Tauri](https://tauri.app/start/prerequisites/#system-dependencies)
+
+### Build from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/stuartstew/video-cropper.git
+cd video-cropper
+
+# Install dependencies
+pnpm install
+
+# Run in development
+pnpm tauri dev
+
+# Build for production
+pnpm tauri build
+```
