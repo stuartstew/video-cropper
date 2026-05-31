@@ -16,7 +16,7 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
     setVideoFile(file);
     setLoading(true);
 
-    info(`opening ${file.path}`);
+    info(`opening "${file.name}"`);
 
     const arrayBuffer = await file.arrayBuffer();
     const bytes = Array.from(new Uint8Array(arrayBuffer));

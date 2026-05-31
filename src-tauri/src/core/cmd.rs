@@ -122,7 +122,7 @@ pub async fn save_cropped_video(
         app.emit("frame", progress.frame)?;
     }
 
-    log::info!("successfully saved the cropped video as {output_path}");
+    log::info!("successfully saved the cropped video as \"{output_path}\"");
 
     Ok(())
 }
