@@ -4,6 +4,9 @@ import type { ImageSize } from "@/types/image-size";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
+const isCropEqual = (a: Crop, b: Crop) =>
+  a.unit === b.unit && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
+
 export const useCrop = (frameSize: ImageSize) => {
   const [crop, setCrop] = useState<Crop>({ unit: "px", x: 0, y: 0, width: 0, height: 0 });
   const [percentCrop, setPercentCrop] = useState<PercentCrop>();
@@ -28,6 +31,9 @@ export const useCrop = (frameSize: ImageSize) => {
         };
 
   const changeCrop = (value: Crop) => {
+    if (isCropEqual(value, crop)) {
+      return;
+    }
     const newX = clamp(value.x, 0, frameSize.width - 1);
     const newY = clamp(value.y, 0, frameSize.height - 1);
     const newWidth = clamp(value.width, 1, frameSize.width - newX);
