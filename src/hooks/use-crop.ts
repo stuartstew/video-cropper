@@ -1,6 +1,6 @@
+import type { ImageSize } from "@tauri-apps/api/image";
 import { useState } from "react";
 import type { Crop, PercentCrop, PixelCrop } from "react-image-crop";
-import type { ImageSize } from "@/types/image-size";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 

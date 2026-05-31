@@ -1,6 +1,6 @@
+import type { ImageSize } from "@tauri-apps/api/image";
 import type { RefObject } from "react";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
-import type { ImageSize } from "@/types/image-size";
 import { useContain } from "../hooks/use-contain";
 
 import "react-image-crop/dist/ReactCrop.css";

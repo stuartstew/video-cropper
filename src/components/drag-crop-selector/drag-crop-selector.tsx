@@ -1,7 +1,7 @@
 import { Center, Image } from "@mantine/core";
+import type { ImageSize } from "@tauri-apps/api/image";
 import { useRef } from "react";
 import type { PercentCrop } from "react-image-crop";
-import type { ImageSize } from "@/types/image-size";
 import { Cropper } from "./components/cropper";
 
 import "react-image-crop/dist/ReactCrop.css";

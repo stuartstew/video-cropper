@@ -2,6 +2,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 
 import { Box, Group, MantineProvider, Stack } from "@mantine/core";
+import type { ImageSize } from "@tauri-apps/api/image";
 import { useState } from "react";
 import { CompletedModal } from "./components/completed-modal";
 import { CropButton } from "./components/crop-button";
@@ -14,7 +15,6 @@ import { VideoTitleBar } from "./components/video-title-bar";
 import { useCrop } from "./hooks/use-crop";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useSaveCrop } from "./hooks/use-save-crop";
-import type { ImageSize } from "./types/image-size";
 
 const App = () => {
   const [frameSize, setFrameSize] = useState<ImageSize>();
