@@ -2,6 +2,7 @@ import type { FileWithPath } from "@mantine/dropzone";
 import { invoke } from "@tauri-apps/api/core";
 import type { ImageSize } from "@tauri-apps/api/image";
 import { Image } from "@tauri-apps/api/image";
+import { error, info } from "@tauri-apps/plugin-log";
 import { useState } from "react";
 
 export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void) => {
@@ -14,6 +15,8 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
 
     setVideoFile(file);
     setLoading(true);
+
+    info(`opening ${file.path}`);
 
     const arrayBuffer = await file.arrayBuffer();
     const bytes = Array.from(new Uint8Array(arrayBuffer));
@@ -29,7 +32,10 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
         const imageSize = await image.size();
         onChangeFrameSize(imageSize);
       })
-      .catch((e) => console.error(e))
+      .catch((e) => {
+        error(e);
+        error("failed to extract the first frame");
+      })
       .finally(() => setLoading(false));
   };
 

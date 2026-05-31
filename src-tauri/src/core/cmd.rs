@@ -36,6 +36,8 @@ fn create_tempfile(data: &[u8]) -> std::io::Result<TempPath> {
 
 #[command]
 pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error> {
+    log::info!("extracting the first frame");
+
     let input_path = create_tempfile(&input_bytes)?;
 
     let mut child = FfmpegCommand::new()
@@ -51,11 +53,15 @@ pub async fn extract_first_frame(input_bytes: Vec<u8>) -> Result<Vec<u8>, Error>
     let mut output_bytes = vec![];
     stdout.read_to_end(&mut output_bytes)?;
 
+    log::info!("successfully extracted the first frame");
+
     Ok(output_bytes)
 }
 
 #[command]
 pub async fn fetch_frame_count(input_bytes: Vec<u8>) -> Result<u32, Error> {
+    log::info!("fetching the frame count");
+
     let input_path = create_tempfile(&input_bytes)?;
 
     let mut child = FfmpegCommand::new()
@@ -71,8 +77,12 @@ pub async fn fetch_frame_count(input_bytes: Vec<u8>) -> Result<u32, Error> {
     let mut buffer = String::new();
     stderr.read_to_string(&mut buffer)?;
 
-    extract_frame_count_from_ffmpeg_stderr(&buffer)
-        .ok_or(Error::Anyhow(anyhow!("cannot extract frame count from ffmpeg stderr")))
+    if let Some(frame_count) = extract_frame_count_from_ffmpeg_stderr(&buffer) {
+        log::info!("successfully fetched the frame count");
+        Ok(frame_count)
+    } else {
+        Err(Error::Anyhow(anyhow!("cannot extract frame count from ffmpeg stderr")))
+    }
 }
 
 fn extract_frame_count_from_ffmpeg_stderr(buffer: &str) -> Option<u32> {
@@ -95,6 +105,8 @@ pub async fn save_cropped_video(
     pixel_crop: PixelCrop,
     output_path: String,
 ) -> Result<(), Error> {
+    log::info!("saving the cropped video");
+
     let input_path = create_tempfile(&input_bytes)?;
 
     let iter = FfmpegCommand::new()
@@ -109,6 +121,8 @@ pub async fn save_cropped_video(
     for progress in iter.filter_progress() {
         app.emit("frame", progress.frame)?;
     }
+
+    log::info!("successfully saved the cropped video as {output_path}");
 
     Ok(())
 }
