@@ -18,11 +18,16 @@ export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size
 
   updateDraftIfValueChanged(value);
 
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+    focus(value);
+    event.target.select();
+  };
+
   return (
     <NumberInput
       value={currentValue(value)}
       onChange={setDraft}
-      onFocus={() => focus(value)}
+      onFocus={handleFocus}
       onBlur={blur}
       allowDecimal={false}
       allowLeadingZeros={false}
