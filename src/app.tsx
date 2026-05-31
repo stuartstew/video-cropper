@@ -18,7 +18,9 @@ import type { ImageSize } from "./types/image-size";
 
 const App = () => {
   const [frameSize, setFrameSize] = useState<ImageSize>();
-  const { crop, percentCrop, changeCrop, changePercentCrop, reset } = useCrop(frameSize ?? { width: 0, height: 0 });
+  const { pixelCrop, percentCrop, changePixelCrop, changePercentCrop, reset } = useCrop(
+    frameSize ?? { width: 0, height: 0 },
+  );
 
   const onChangeFrameSize = (size: ImageSize) => {
     setFrameSize(size);
@@ -39,7 +41,7 @@ const App = () => {
   const { processStatus, saveCrop, closeCompletedModal } = useSaveCrop();
   const handleSaveCrop = () => {
     if (videoFile) {
-      saveCrop(videoFile, crop);
+      saveCrop(videoFile, pixelCrop);
     }
   };
 
@@ -63,7 +65,7 @@ const App = () => {
           <VideoDropzone onChangeVideoFile={changeVideoFile} loading={loading} />
         )}
         <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
-          <ManualCropInput crop={crop} onChangeCrop={changeCrop} disabled={loading || disabled} />
+          <ManualCropInput pixelCrop={pixelCrop} onChangePixelCrop={changePixelCrop} disabled={loading || disabled} />
           <Box flex={1} />
           <ResetButton onClick={handleReset} disabled={loading || disabled || isDefault} />
           <CropButton onClick={handleSaveCrop} disabled={loading || disabled} />

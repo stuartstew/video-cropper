@@ -6,25 +6,25 @@ describe("use-crop", () => {
   it("should update crop", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
-    act(() => result.current.changeCrop({ unit: "px", x: 0, y: 100, width: 300, height: 200 }));
-    expect(result.current.crop).toEqual({ unit: "px", x: 0, y: 100, width: 300, height: 200 });
+    act(() => result.current.changePixelCrop({ unit: "px", x: 0, y: 100, width: 300, height: 200 }));
+    expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 100, width: 300, height: 200 });
 
-    act(() => result.current.changeCrop({ ...result.current.crop, height: 400 }));
-    expect(result.current.crop.height).toBe(300);
+    act(() => result.current.changePixelCrop({ ...result.current.pixelCrop, height: 400 }));
+    expect(result.current.pixelCrop.height).toBe(300);
 
-    act(() => result.current.changeCrop({ ...result.current.crop, y: 350 }));
-    expect(result.current.crop.y).toBe(350);
-    expect(result.current.crop.height).toBe(50);
+    act(() => result.current.changePixelCrop({ ...result.current.pixelCrop, y: 350 }));
+    expect(result.current.pixelCrop.y).toBe(350);
+    expect(result.current.pixelCrop.height).toBe(50);
 
-    act(() => result.current.changeCrop({ ...result.current.crop, x: 600 }));
-    expect(result.current.crop.x).toBe(599);
-    expect(result.current.crop.width).toBe(1);
+    act(() => result.current.changePixelCrop({ ...result.current.pixelCrop, x: 600 }));
+    expect(result.current.pixelCrop.x).toBe(599);
+    expect(result.current.pixelCrop.width).toBe(1);
   });
 
   it("should sync percent crop and pixel crop", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
-    act(() => result.current.changeCrop({ unit: "px", x: 0, y: 100, width: 300, height: 200 }));
+    act(() => result.current.changePixelCrop({ unit: "px", x: 0, y: 100, width: 300, height: 200 }));
 
     expect(result.current.percentCrop).toBeDefined();
     if (!result.current.percentCrop) return; // Add this check to satisfy TypeScript
@@ -35,6 +35,6 @@ describe("use-crop", () => {
 
     act(() => result.current.changePercentCrop({ unit: "%", x: 10, y: 10, width: 20, height: 25 }));
 
-    expect(result.current.crop).toEqual({ unit: "px", x: 60, y: 40, width: 120, height: 100 });
+    expect(result.current.pixelCrop).toEqual({ unit: "px", x: 60, y: 40, width: 120, height: 100 });
   });
 });
