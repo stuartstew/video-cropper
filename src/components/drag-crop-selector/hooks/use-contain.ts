@@ -22,5 +22,5 @@ export const useContain = (containerRef: RefObject<HTMLDivElement | null>, imgWi
   const renderedWidth = imgWidth * scale;
   const renderedHeight = imgHeight * scale;
 
-  return { containerRef, renderedWidth, renderedHeight };
+  return { renderedWidth, renderedHeight };
 };

@@ -1,33 +1,29 @@
 import { useState } from "react";
 
-export const useDraftInput = <T>(onBlur: (draft: T) => void) => {
-  const [draft, setDraft] = useState<T>();
-  const [oldValue, setOldValue] = useState<T>();
+export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
+  const [draft, setDraft] = useState<T>(value);
+  const [oldValue, setOldValue] = useState<T>(value);
   const [focused, setFocused] = useState(false);
 
-  // biome-ignore lint/style/noNonNullAssertion: draft cannot be undefined if focused is true
-  const currentValue = (value: T) => (focused ? draft! : value);
+  const displayValue = focused ? draft : value;
 
-  const setDefinedDraft = (value: T) => setDraft(value);
-
-  const focus = (value: T) => {
+  const focus = () => {
     setDraft(value);
     setOldValue(value);
     setFocused(true);
   };
 
   const blur = () => {
-    // biome-ignore lint/style/noNonNullAssertion: draft cannot be undefined here
-    onBlur(draft!);
+    onBlur(draft);
     setFocused(false);
   };
 
-  const updateDraftIfValueChanged = (value: T) => {
+  const updateDraftIfValueChanged = () => {
     if (focused && value !== oldValue) {
       setDraft(value);
       setOldValue(value);
     }
   };
 
-  return { currentValue, setDraft: setDefinedDraft, focus, blur, updateDraftIfValueChanged };
+  return { displayValue, setDraft, focus, blur, updateDraftIfValueChanged };
 };
