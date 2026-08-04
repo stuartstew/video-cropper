@@ -11,21 +11,24 @@ type Props = {
 };
 
 export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size, w }: Props) => {
-  const { currentValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>((draft) => {
-    const clampedValue = typeof draft === "number" ? draft : 0;
-    onChange(clampedValue);
-  });
+  const { currentValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>(
+    value,
+    (draft) => {
+      const clampedValue = typeof draft === "number" ? draft : 0;
+      onChange(clampedValue);
+    },
+  );
 
-  updateDraftIfValueChanged(value);
+  updateDraftIfValueChanged();
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-    focus(value);
+    focus();
     event.target.select();
   };
 
   return (
     <NumberInput
-      value={currentValue(value)}
+      value={currentValue}
       onChange={setDraft}
       onFocus={handleFocus}
       onBlur={blur}
