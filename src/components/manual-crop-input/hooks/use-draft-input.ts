@@ -5,7 +5,7 @@ export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
   const [oldValue, setOldValue] = useState<T>(value);
   const [focused, setFocused] = useState(false);
 
-  const currentValue = focused ? draft : value;
+  const displayValue = focused ? draft : value;
 
   const focus = () => {
     setDraft(value);
@@ -25,5 +25,5 @@ export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
     }
   };
 
-  return { currentValue, setDraft, focus, blur, updateDraftIfValueChanged };
+  return { displayValue, setDraft, focus, blur, updateDraftIfValueChanged };
 };

@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size, w }: Props) => {
-  const { currentValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>(
+  const { displayValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>(
     value,
     (draft) => {
       const clampedValue = typeof draft === "number" ? draft : 0;
@@ -28,7 +28,7 @@ export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size
 
   return (
     <NumberInput
-      value={currentValue}
+      value={displayValue}
       onChange={setDraft}
       onFocus={handleFocus}
       onBlur={blur}
