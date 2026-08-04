@@ -12,7 +12,7 @@ Video Cropper is a desktop app that allows you to crop videos.
 
 - Node.js 24+
 - pnpm 11+
-- Rust 1.95+
+- Rust 1.97+
 - [System dependencies for Tauri](https://tauri.app/start/prerequisites/#system-dependencies)
 
 ### Build from Source
