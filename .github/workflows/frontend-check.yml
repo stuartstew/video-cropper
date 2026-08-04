@@ -54,7 +54,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Format & Lint (Biome)
-        run: pnpm check
+        run: pnpm ci
 
       - name: Type check (TypeScript)
         run: pnpm typecheck
