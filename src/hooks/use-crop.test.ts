@@ -38,6 +38,13 @@ describe("use-crop", () => {
     expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 100, width: 300, height: 300 });
   });
 
+  it("should update percent crop", () => {
+    const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
+
+    act(() => result.current.changePercentCrop({ unit: "%", x: 0, y: 25, width: 50, height: 50 }));
+    expect(result.current.percentCrop).toEqual({ unit: "%", x: 0, y: 25, width: 50, height: 50 });
+  });
+
   it("should sync percent crop and pixel crop", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
