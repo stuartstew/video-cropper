@@ -45,7 +45,7 @@ describe("use-crop", () => {
     expect(result.current.percentCrop).toEqual({ unit: "%", x: 0, y: 25, width: 50, height: 50 });
   });
 
-  it("should sync percent crop and pixel crop", () => {
+  it("should update percent crop if pixel crop is changed", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
     act(() => result.current.changePixelCrop({ unit: "px", x: 0, y: 100, width: 300, height: 200 }));
@@ -56,9 +56,12 @@ describe("use-crop", () => {
     expect(result.current.percentCrop.y).toBeCloseTo(25);
     expect(result.current.percentCrop.width).toBeCloseTo(50);
     expect(result.current.percentCrop.height).toBeCloseTo(50);
+  });
+
+  it("should update pixel crop if percent crop is changed", () => {
+    const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
     act(() => result.current.changePercentCrop({ unit: "%", x: 10, y: 10, width: 20, height: 25 }));
-
     expect(result.current.pixelCrop).toEqual({ unit: "px", x: 60, y: 40, width: 120, height: 100 });
   });
 });
