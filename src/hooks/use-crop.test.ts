@@ -75,14 +75,14 @@ describe("use-crop", () => {
   it("should reset pixel crop", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
-    act(() => result.current.reset({ width: 600, height: 400 }));
+    act(() => result.current.reset());
     expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 0, width: 600, height: 400 });
   });
 
   it("should reset percent crop", () => {
     const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
 
-    act(() => result.current.reset({ width: 600, height: 400 }));
+    act(() => result.current.reset());
     expect(result.current.percentCrop).toBeUndefined();
   });
 });

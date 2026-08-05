@@ -8,7 +8,6 @@ const isCropEqual = (a: Crop, b: Crop) =>
   a.unit === b.unit && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 
 export const useCrop = (frameSize: ImageSize) => {
-  const [pixelCrop, setPixelCrop] = useState<PixelCrop>({ unit: "px", x: 0, y: 0, width: 0, height: 0 });
   const [percentCrop, setPercentCrop] = useState<PercentCrop>();
 
   const pixelToPercent = (crop: PixelCrop): PercentCrop => ({
@@ -19,8 +18,8 @@ export const useCrop = (frameSize: ImageSize) => {
     height: (crop.height / frameSize.height) * 100,
   });
 
-  const percentToPixel = (percentCrop: PercentCrop): PixelCrop =>
-    percentCrop.width === 0 || percentCrop.height === 0
+  const percentToPixel = (percentCrop?: PercentCrop): PixelCrop =>
+    percentCrop === undefined || percentCrop.width === 0 || percentCrop.height === 0
       ? { unit: "px", x: 0, y: 0, width: frameSize.width, height: frameSize.height }
       : {
           unit: "px",
@@ -29,6 +28,8 @@ export const useCrop = (frameSize: ImageSize) => {
           width: Math.round((percentCrop.width / 100) * frameSize.width),
           height: Math.round((percentCrop.height / 100) * frameSize.height),
         };
+
+  const pixelCrop = percentToPixel(percentCrop);
 
   const changePixelCrop = (value: PixelCrop) => {
     if (isCropEqual(value, pixelCrop)) {
@@ -39,25 +40,14 @@ export const useCrop = (frameSize: ImageSize) => {
     const newWidth = clamp(value.width, 1, frameSize.width - newX);
     const newHeight = clamp(value.height, 1, frameSize.height - newY);
     const newCrop: PixelCrop = { unit: "px", x: newX, y: newY, width: newWidth, height: newHeight };
-    setPixelCrop(newCrop);
     setPercentCrop(pixelToPercent(newCrop));
   };
 
   const changePercentCrop = (value: PercentCrop) => {
     setPercentCrop(value);
-    setPixelCrop(percentToPixel(value));
   };
 
-  const reset = (frameSize: ImageSize) => {
-    setPixelCrop({ unit: "px", x: 0, y: 0, width: frameSize.width, height: frameSize.height });
-    setPercentCrop(undefined);
-  };
+  const reset = () => setPercentCrop(undefined);
 
-  return {
-    pixelCrop,
-    percentCrop,
-    changePixelCrop,
-    changePercentCrop,
-    reset,
-  };
+  return { pixelCrop, percentCrop, changePixelCrop, changePercentCrop, reset };
 };
