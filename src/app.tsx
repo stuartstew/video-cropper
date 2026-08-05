@@ -24,14 +24,14 @@ const App = () => {
 
   const onChangeFrameSize = (size: ImageSize) => {
     setFrameSize(size);
-    reset(size);
+    reset();
   };
 
   const { videoFile, loading, frameUrl, changeVideoFile, closeVideoFile } = useFrameExtraction(onChangeFrameSize);
 
   const handleReset = () => {
     if (frameSize) {
-      reset(frameSize);
+      reset();
     }
   };
 
