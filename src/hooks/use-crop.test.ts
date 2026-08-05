@@ -64,4 +64,11 @@ describe("use-crop", () => {
     act(() => result.current.changePercentCrop({ unit: "%", x: 10, y: 10, width: 20, height: 25 }));
     expect(result.current.pixelCrop).toEqual({ unit: "px", x: 60, y: 40, width: 120, height: 100 });
   });
+
+  it("should reset pixel crop if both width and height of percent crop are changed to 0", () => {
+    const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
+
+    act(() => result.current.changePercentCrop({ unit: "%", x: 0, y: 0, width: 0, height: 0 }));
+    expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 0, width: 600, height: 400 });
+  });
 });
