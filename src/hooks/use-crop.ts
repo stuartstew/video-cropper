@@ -49,11 +49,5 @@ export const useCrop = (frameSize: ImageSize) => {
 
   const reset = () => setPercentCrop(undefined);
 
-  return {
-    pixelCrop,
-    percentCrop,
-    changePixelCrop,
-    changePercentCrop,
-    reset,
-  };
+  return { pixelCrop, percentCrop, changePixelCrop, changePercentCrop, reset };
 };
