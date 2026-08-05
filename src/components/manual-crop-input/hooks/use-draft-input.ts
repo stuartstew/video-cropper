@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
-  const [draft, setDraft] = useState<T>(value);
-  const [oldValue, setOldValue] = useState<T>(value);
+export const useDraftInput = <T>(savedValue: T, onBlur: (draft: T) => void) => {
+  const [draft, setDraft] = useState<T>(savedValue);
+  const [prevValue, setPrevValue] = useState<T>(savedValue);
   const [focused, setFocused] = useState(false);
 
-  const displayValue = focused ? draft : value;
+  const displayValue = focused ? draft : savedValue;
 
   const focus = () => {
-    setDraft(value);
-    setOldValue(value);
+    setDraft(savedValue);
+    setPrevValue(savedValue);
     setFocused(true);
   };
 
@@ -18,12 +18,10 @@ export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
     setFocused(false);
   };
 
-  const updateDraftIfValueChanged = () => {
-    if (focused && value !== oldValue) {
-      setDraft(value);
-      setOldValue(value);
-    }
-  };
+  if (focused && savedValue !== prevValue) {
+    setDraft(savedValue);
+    setPrevValue(savedValue);
+  }
 
-  return { displayValue, setDraft, focus, blur, updateDraftIfValueChanged };
+  return { displayValue, setDraft, focus, blur };
 };

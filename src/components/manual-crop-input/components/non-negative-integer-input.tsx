@@ -11,15 +11,10 @@ type Props = {
 };
 
 export const NonNegativeIntegerInput = ({ value, onChange, label, disabled, size, w }: Props) => {
-  const { displayValue, setDraft, focus, blur, updateDraftIfValueChanged } = useDraftInput<string | number>(
-    value,
-    (draft) => {
-      const clampedValue = typeof draft === "number" ? draft : 0;
-      onChange(clampedValue);
-    },
-  );
-
-  updateDraftIfValueChanged();
+  const { displayValue, setDraft, focus, blur } = useDraftInput<string | number>(value, (draft) => {
+    const clampedValue = typeof draft === "number" ? draft : 0;
+    onChange(clampedValue);
+  });
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>) => {
     focus();
