@@ -71,4 +71,18 @@ describe("use-crop", () => {
     act(() => result.current.changePercentCrop({ unit: "%", x: 0, y: 0, width: 0, height: 0 }));
     expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 0, width: 600, height: 400 });
   });
+
+  it("should reset pixel crop", () => {
+    const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
+
+    act(() => result.current.reset({ width: 600, height: 400 }));
+    expect(result.current.pixelCrop).toEqual({ unit: "px", x: 0, y: 0, width: 600, height: 400 });
+  });
+
+  it("should reset percent crop", () => {
+    const { result } = renderHook(() => useCrop({ width: 600, height: 400 }));
+
+    act(() => result.current.reset({ width: 600, height: 400 }));
+    expect(result.current.percentCrop).toBeUndefined();
+  });
 });
