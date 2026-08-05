@@ -29,12 +29,6 @@ const App = () => {
 
   const { videoFile, loading, frameUrl, changeVideoFile, closeVideoFile } = useFrameExtraction(onChangeFrameSize);
 
-  const handleReset = () => {
-    if (frameSize) {
-      reset();
-    }
-  };
-
   const disabled = !videoFile;
   const isDefault = !percentCrop || percentCrop.height === 0 || percentCrop.width === 0;
 
@@ -67,7 +61,7 @@ const App = () => {
         <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
           <ManualCropInput pixelCrop={pixelCrop} onChangePixelCrop={changePixelCrop} disabled={loading || disabled} />
           <Box flex={1} />
-          <ResetButton onClick={handleReset} disabled={loading || disabled || isDefault} />
+          <ResetButton onClick={reset} disabled={loading || disabled || isDefault} />
           <CropButton onClick={handleSaveCrop} disabled={loading || disabled} />
         </Group>
       </Stack>
