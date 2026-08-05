@@ -18,12 +18,10 @@ export const useDraftInput = <T>(value: T, onBlur: (draft: T) => void) => {
     setFocused(false);
   };
 
-  const updateDraftIfValueChanged = () => {
-    if (focused && value !== oldValue) {
-      setDraft(value);
-      setOldValue(value);
-    }
-  };
+  if (focused && value !== oldValue) {
+    setDraft(value);
+    setOldValue(value);
+  }
 
-  return { displayValue, setDraft, focus, blur, updateDraftIfValueChanged };
+  return { displayValue, setDraft, focus, blur };
 };
