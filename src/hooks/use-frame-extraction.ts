@@ -2,6 +2,7 @@ import type { FileWithPath } from "@mantine/dropzone";
 import { invoke } from "@tauri-apps/api/core";
 import type { ImageSize } from "@tauri-apps/api/image";
 import { Image } from "@tauri-apps/api/image";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { error, info } from "@tauri-apps/plugin-log";
 import { useState } from "react";
 
@@ -31,6 +32,9 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
         const image = await Image.fromBytes(outputByteArray);
         const imageSize = await image.size();
         onChangeFrameSize(imageSize);
+
+        const window = getCurrentWindow();
+        await window.setTitle(`${file.name} - Video Cropper`);
       })
       .catch((e) => {
         error(e);
@@ -39,7 +43,12 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
       .finally(() => setLoading(false));
   };
 
-  const closeVideoFile = () => setVideoFile(undefined);
+  const closeVideoFile = async () => {
+    setVideoFile(undefined);
+
+    const window = getCurrentWindow();
+    await window.setTitle("Video Cropper");
+  };
 
   return { videoFile, loading, frameUrl, changeVideoFile, closeVideoFile };
 };
