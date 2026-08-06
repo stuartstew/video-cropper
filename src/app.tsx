@@ -14,6 +14,7 @@ import { VideoDropzone } from "./components/video-dropzone";
 import { VideoTitleBar } from "./components/video-title-bar";
 import { useCrop } from "./hooks/use-crop";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
+import { useMenu } from "./hooks/use-menu";
 import { useSaveCrop } from "./hooks/use-save-crop";
 
 const App = () => {
@@ -38,6 +39,8 @@ const App = () => {
       saveCrop(videoFile, pixelCrop);
     }
   };
+
+  useMenu();
 
   return (
     <MantineProvider defaultColorScheme="dark">
