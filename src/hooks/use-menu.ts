@@ -3,7 +3,7 @@ import { message } from "@tauri-apps/plugin-dialog";
 import { useEffect, useRef } from "react";
 
 const appInfoMessage = `
-Video Cropper
+VideoCropper
 https://github.com/stuartstew/video-cropper
 `.trim();
 
@@ -54,7 +54,7 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
         items: [
           await MenuItem.new({
             id: "about",
-            text: "About Video Cropper",
+            text: "About VideoCropper",
             action: showAppInfoDialog,
           }),
         ],
