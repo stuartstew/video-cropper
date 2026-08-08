@@ -35,7 +35,7 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
         onChangeFrameSize(imageSize);
 
         const window = getCurrentWindow();
-        await window.setTitle(`${file.name} - Video Cropper`);
+        await window.setTitle(`${file.name} - VideoCropper`);
 
         setKey(Date.now());
       })
@@ -50,7 +50,7 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
     setVideoFile(undefined);
 
     const window = getCurrentWindow();
-    await window.setTitle("Video Cropper");
+    await window.setTitle("VideoCropper");
   };
 
   return { videoFile, loading, frameUrl, key, changeVideoFile, closeVideoFile };
