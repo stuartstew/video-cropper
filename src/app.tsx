@@ -11,6 +11,7 @@ import { ProgressModal } from "./components/progress-modal";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useMenu } from "./hooks/use-menu";
 import { useSaveCrop } from "./hooks/use-save-crop";
+import { useVideoFileDialog } from "./hooks/use-video-file-dialog";
 
 const App = () => {
   const [frameSize, setFrameSize] = useState<ImageSize>();
@@ -24,7 +25,9 @@ const App = () => {
     }
   };
 
-  useMenu();
+  const fileDialog = useVideoFileDialog(changeVideoFile);
+
+  useMenu({ onOpen: fileDialog.open });
 
   return (
     <MantineProvider defaultColorScheme="dark">

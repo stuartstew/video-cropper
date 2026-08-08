@@ -1,7 +1,15 @@
 import { CheckMenuItem, Menu, MenuItem, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-export const useMenu = () => {
+type Props = {
+  onOpen: () => void;
+};
+
+export const useMenu = ({ onOpen }: Props) => {
+  // Prevents menu from being re-rendered when `onOpen` changes
+  const onOpenRef = useRef(onOpen);
+  onOpenRef.current = onOpen;
+
   useEffect(() => {
     const setupMenu = async () => {
       const fileSubmenu = await Submenu.new({
@@ -10,7 +18,7 @@ export const useMenu = () => {
           await MenuItem.new({
             id: "open",
             text: "Open",
-            action: () => {},
+            action: onOpenRef.current,
           }),
           await MenuItem.new({
             id: "close",
