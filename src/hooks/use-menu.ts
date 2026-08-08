@@ -1,5 +1,11 @@
 import { Menu, MenuItem, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
+import { message } from "@tauri-apps/plugin-dialog";
 import { useEffect, useRef } from "react";
+
+const appInfoMessage = `
+Video Cropper
+https://github.com/stuartstew/video-cropper
+`.trim();
 
 type Props = {
   onOpen: () => void;
@@ -15,6 +21,10 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
   onCloseRef.current = onClose;
 
   useEffect(() => {
+    const showAppInfoDialog = async () => {
+      await message(appInfoMessage);
+    };
+
     const setupMenu = async () => {
       const fileSubmenu = await Submenu.new({
         text: "File",
@@ -45,7 +55,7 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
           await MenuItem.new({
             id: "about",
             text: "About Video Cropper",
-            action: () => {},
+            action: showAppInfoDialog,
           }),
         ],
       });
