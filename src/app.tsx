@@ -41,7 +41,6 @@ const App = () => {
         loading={loading}
         onChangeVideoFile={changeVideoFile}
         onSave={handleSaveCrop}
-        onClose={closeVideoFile}
       />
     </MantineProvider>
   );

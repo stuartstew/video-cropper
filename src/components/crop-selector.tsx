@@ -8,7 +8,6 @@ import { DragCropSelector } from "./drag-crop-selector";
 import { ManualCropInput } from "./manual-crop-input";
 import { ResetButton } from "./reset-button";
 import { VideoDropzone } from "./video-dropzone";
-import { VideoTitleBar } from "./video-title-bar";
 
 type Props = {
   videoFile?: FileWithPath;
@@ -16,19 +15,10 @@ type Props = {
   frameSize: ImageSize;
   loading: boolean;
   onChangeVideoFile: (file: FileWithPath) => void;
-  onClose: () => void;
   onSave: (pixelCrop: PixelCrop) => void;
 };
 
-export const CropSelector = ({
-  videoFile,
-  frameUrl,
-  frameSize,
-  loading,
-  onChangeVideoFile,
-  onClose,
-  onSave,
-}: Props) => {
+export const CropSelector = ({ videoFile, frameUrl, frameSize, loading, onChangeVideoFile, onSave }: Props) => {
   const { pixelCrop, percentCrop, changePixelCrop, changePercentCrop, reset } = useCrop(frameSize);
 
   const disabled = !videoFile;
@@ -37,16 +27,13 @@ export const CropSelector = ({
   return (
     <Stack h="100vh" display="flex" gap={0}>
       {!loading && videoFile ? (
-        <>
-          <VideoTitleBar videoName={videoFile.name} onClose={onClose} />
-          <DragCropSelector
-            percentCrop={percentCrop}
-            onChangePercentCrop={changePercentCrop}
-            frameSize={frameSize}
-            loading={loading}
-            frameUrl={frameUrl}
-          />
-        </>
+        <DragCropSelector
+          percentCrop={percentCrop}
+          onChangePercentCrop={changePercentCrop}
+          frameSize={frameSize}
+          loading={loading}
+          frameUrl={frameUrl}
+        />
       ) : (
         <VideoDropzone onChangeVideoFile={onChangeVideoFile} loading={loading} />
       )}
