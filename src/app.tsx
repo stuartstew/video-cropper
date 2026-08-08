@@ -27,7 +27,7 @@ const App = () => {
 
   const fileDialog = useVideoFileDialog(changeVideoFile);
 
-  useMenu({ onOpen: fileDialog.open });
+  useMenu({ onOpen: fileDialog.open, onClose: closeVideoFile });
 
   return (
     <MantineProvider defaultColorScheme="dark">

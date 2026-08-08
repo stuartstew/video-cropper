@@ -3,12 +3,16 @@ import { useEffect, useRef } from "react";
 
 type Props = {
   onOpen: () => void;
+  onClose: () => void;
 };
 
-export const useMenu = ({ onOpen }: Props) => {
-  // Prevents menu from being re-rendered when `onOpen` changes
+export const useMenu = ({ onOpen, onClose }: Props) => {
+  // Prevents menu from being re-rendered when event handlers change
   const onOpenRef = useRef(onOpen);
   onOpenRef.current = onOpen;
+
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     const setupMenu = async () => {
@@ -23,7 +27,7 @@ export const useMenu = ({ onOpen }: Props) => {
           await MenuItem.new({
             id: "close",
             text: "Close",
-            action: () => {},
+            action: onCloseRef.current,
           }),
           await PredefinedMenuItem.new({
             item: "Separator",
