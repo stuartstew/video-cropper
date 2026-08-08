@@ -1,4 +1,4 @@
-import { CheckMenuItem, Menu, MenuItem, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
+import { Menu, MenuItem, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
 import { useEffect, useRef } from "react";
 
 type Props = {
@@ -39,35 +39,6 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
         ],
       });
 
-      const colorSchemeSubmenu = await Submenu.new({
-        text: "Color scheme",
-        items: [
-          await CheckMenuItem.new({
-            id: "light",
-            text: "Light",
-            checked: false,
-            action: () => {},
-          }),
-          await CheckMenuItem.new({
-            id: "dark",
-            text: "Dark",
-            checked: false,
-            action: () => {},
-          }),
-          await CheckMenuItem.new({
-            id: "system",
-            text: "System",
-            checked: true,
-            action: () => {},
-          }),
-        ],
-      });
-
-      const settingsSubmenu = await Submenu.new({
-        text: "Settings",
-        items: [colorSchemeSubmenu],
-      });
-
       const helpSubmenu = await Submenu.new({
         text: "Help",
         items: [
@@ -80,7 +51,7 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
       });
 
       const menu = await Menu.new({
-        items: [fileSubmenu, settingsSubmenu, helpSubmenu],
+        items: [fileSubmenu, helpSubmenu],
       });
 
       await menu.setAsAppMenu();
