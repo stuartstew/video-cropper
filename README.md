@@ -31,3 +31,7 @@ pnpm tauri dev
 # Build for production
 pnpm tauri build
 ```
+
+## Credits
+
+- Icon: "crop" by [Phosphor Icons](https://phosphoricons.com) - MIT License
