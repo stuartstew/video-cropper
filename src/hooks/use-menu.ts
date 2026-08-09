@@ -1,11 +1,9 @@
+import { getName, getVersion } from "@tauri-apps/api/app";
 import { Menu, MenuItem, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
 import { message } from "@tauri-apps/plugin-dialog";
 import { useEffect, useRef } from "react";
 
-const appInfoMessage = `
-VideoCropper
-https://github.com/stuartstew/video-cropper
-`.trim();
+const GITHUB_REPOSITORY_URL = "https://github.com/stuartstew/video-cropper";
 
 type Props = {
   onOpen: () => void;
@@ -22,6 +20,9 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
 
   useEffect(() => {
     const showAppInfoDialog = async () => {
+      const name = await getName();
+      const version = await getVersion();
+      const appInfoMessage = `${name}\n${version}\n${GITHUB_REPOSITORY_URL}\n\nLicensed under the MIT License.`;
       await message(appInfoMessage);
     };
 
