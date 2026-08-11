@@ -54,6 +54,11 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
         text: "Help",
         items: [
           await MenuItem.new({
+            id: "licenses",
+            text: "Licenses",
+            action: () => {},
+          }),
+          await MenuItem.new({
             id: "about",
             text: "About VideoCropper",
             action: showAppInfoDialog,
