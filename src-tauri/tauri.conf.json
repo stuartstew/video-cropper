@@ -42,7 +42,7 @@
     ],
     "licenseFile": "../LICENSE",
     "resources": [
-      "../licenses/frontend-licenses.md",
+      "../licenses/frontend-licenses.json",
       "../licenses/rust-licenses.html"
     ]
   }
