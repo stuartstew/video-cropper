@@ -1,4 +1,4 @@
-name: Frontend Check
+name: Frontend License Check
 
 on:
   push:
