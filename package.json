@@ -26,7 +26,8 @@
     "test:watch": "vitest",
     "licenses:frontend": "pnpm licenses list --prod --json | jq \"del(.[].[].paths)\" > licenses/frontend-licenses.json",
     "licenses:rust": "cd src-tauri && cargo about generate about.hbs -o ../licenses/rust-licenses.html",
-    "licenses:generate": "pnpm licenses:frontend && pnpm licenses:rust"
+    "licenses:generate": "pnpm licenses:frontend && pnpm licenses:rust",
+    "licenses:rust:deny": "cd src-tauri && cargo deny check licenses"
   },
   "dependencies": {
     "@mantine/core": "^9.5.1",
