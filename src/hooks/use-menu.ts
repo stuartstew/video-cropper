@@ -22,7 +22,17 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
     const showAppInfoDialog = async () => {
       const name = await getName();
       const version = await getVersion();
-      const appInfoMessage = `${name}\n${version}\n${GITHUB_REPOSITORY_URL}\n\nLicensed under the MIT License.`;
+      const appInfoMessage = `
+        ${name}
+        ${version}
+        ${GITHUB_REPOSITORY_URL}
+
+        Copyright (c) 2026 stuartstew
+        Licensed under the MIT License.
+      `
+        .trim()
+        .replace(/^[^\S\r\n]+/gm, "");
+
       await message(appInfoMessage);
     };
 
