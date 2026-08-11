@@ -61,8 +61,7 @@ jobs:
           workspaces: "./src-tauri -> target"
 
       - name: Run clippy
-        working-directory: src-tauri
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        run: cd src-tauri && cargo clippy --all-targets --all-features -- -D warnings
 
   test:
     name: Test
@@ -91,5 +90,4 @@ jobs:
           workspaces: "./src-tauri -> target"
 
       - name: Run tests
-        working-directory: src-tauri
-        run: cargo test --all-features
+        run: cd src-tauri && cargo test --all-features
