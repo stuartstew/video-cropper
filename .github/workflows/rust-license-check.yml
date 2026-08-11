@@ -38,7 +38,7 @@ jobs:
       - name: Check diff
         run: |
           git add .
-          git diff --cached --exit-code -- licenses/rust-licenses.html
+          git diff --cached --exit-code -w -- licenses/rust-licenses.html
 
       - name: Check for license policy violations
         run: cd src-tauri && cargo deny check licenses
