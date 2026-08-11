@@ -1,0 +1,403 @@
+{
+  "MIT": [
+    {
+      "name": "@floating-ui/core",
+      "versions": [
+        "1.8.0"
+      ],
+      "license": "MIT",
+      "author": "atomiks",
+      "homepage": "https://floating-ui.com",
+      "description": "Positioning library for floating elements: tooltips, popovers, dropdowns, and more"
+    },
+    {
+      "name": "@floating-ui/dom",
+      "versions": [
+        "1.8.0"
+      ],
+      "license": "MIT",
+      "author": "atomiks",
+      "homepage": "https://floating-ui.com",
+      "description": "Floating UI for the web"
+    },
+    {
+      "name": "@floating-ui/react",
+      "versions": [
+        "0.27.20"
+      ],
+      "license": "MIT",
+      "author": "atomiks",
+      "homepage": "https://floating-ui.com/docs/react",
+      "description": "Floating UI for React"
+    },
+    {
+      "name": "@floating-ui/react-dom",
+      "versions": [
+        "2.1.9"
+      ],
+      "license": "MIT",
+      "author": "atomiks",
+      "homepage": "https://floating-ui.com/docs/react-dom",
+      "description": "Floating UI for React DOM"
+    },
+    {
+      "name": "@floating-ui/utils",
+      "versions": [
+        "0.2.12"
+      ],
+      "license": "MIT",
+      "author": "atomiks",
+      "homepage": "https://floating-ui.com",
+      "description": "Utilities for Floating UI"
+    },
+    {
+      "name": "@mantine/core",
+      "versions": [
+        "9.5.1"
+      ],
+      "license": "MIT",
+      "author": "Vitaly Rtishchev",
+      "homepage": "https://mantine.dev/",
+      "description": "React components library focused on usability, accessibility and developer experience"
+    },
+    {
+      "name": "@mantine/dropzone",
+      "versions": [
+        "9.5.1"
+      ],
+      "license": "MIT",
+      "author": "Vitaly Rtishchev",
+      "homepage": "https://mantine.dev/x/dropzone/",
+      "description": "Dropzone component built with Mantine theme and components"
+    },
+    {
+      "name": "@mantine/hooks",
+      "versions": [
+        "9.5.1"
+      ],
+      "license": "MIT",
+      "author": "Vitaly Rtishchev",
+      "homepage": "https://mantine.dev",
+      "description": "A collection of 50+ hooks for state and UI management"
+    },
+    {
+      "name": "@phosphor-icons/react",
+      "versions": [
+        "2.1.10"
+      ],
+      "license": "MIT",
+      "author": "Tobias Fried",
+      "homepage": "https://phosphoricons.com",
+      "description": "A clean and friendly icon family for React"
+    },
+    {
+      "name": "@types/react",
+      "versions": [
+        "19.2.18"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react",
+      "description": "TypeScript definitions for react"
+    },
+    {
+      "name": "attr-accept",
+      "versions": [
+        "2.2.5"
+      ],
+      "license": "MIT",
+      "author": "Andrey Okonetchnikov @okonetchnikov",
+      "homepage": "https://github.com/react-dropzone/attr-accept#readme",
+      "description": "JavaScript implementation of the \"accept\" attribute for HTML5 <input type=\"file\">"
+    },
+    {
+      "name": "clsx",
+      "versions": [
+        "2.1.1"
+      ],
+      "license": "MIT",
+      "author": "Luke Edwards",
+      "homepage": "https://github.com/lukeed/clsx#readme",
+      "description": "A tiny (239B) utility for constructing className strings conditionally."
+    },
+    {
+      "name": "csstype",
+      "versions": [
+        "3.2.3"
+      ],
+      "license": "MIT",
+      "author": "Fredrik Nicol",
+      "homepage": "https://github.com/frenic/csstype#readme",
+      "description": "Strict TypeScript and Flow types for style based on MDN data"
+    },
+    {
+      "name": "detect-node-es",
+      "versions": [
+        "1.1.0"
+      ],
+      "license": "MIT",
+      "author": "Ilya Kantor",
+      "homepage": "https://github.com/thekashey/detect-node",
+      "description": "Detect Node.JS (as opposite to browser environment). ESM modification"
+    },
+    {
+      "name": "file-selector",
+      "versions": [
+        "2.1.2"
+      ],
+      "license": "MIT",
+      "author": "Roland Groza",
+      "homepage": "https://github.com/react-dropzone/file-selector",
+      "description": "Convert DataTransfer object to a list of File objects"
+    },
+    {
+      "name": "get-nonce",
+      "versions": [
+        "1.0.1"
+      ],
+      "license": "MIT",
+      "author": "Anton Korzunov",
+      "homepage": "https://github.com/theKashey/get-nonce",
+      "description": "returns nonce"
+    },
+    {
+      "name": "js-tokens",
+      "versions": [
+        "4.0.0"
+      ],
+      "license": "MIT",
+      "author": "Simon Lydell",
+      "homepage": "https://github.com/lydell/js-tokens#readme",
+      "description": "A regex that tokenizes JavaScript."
+    },
+    {
+      "name": "loose-envify",
+      "versions": [
+        "1.4.0"
+      ],
+      "license": "MIT",
+      "author": "Andres Suarez",
+      "homepage": "https://github.com/zertosh/loose-envify",
+      "description": "Fast (and loose) selective `process.env` replacer using js-tokens instead of an AST"
+    },
+    {
+      "name": "object-assign",
+      "versions": [
+        "4.1.1"
+      ],
+      "license": "MIT",
+      "author": "Sindre Sorhus",
+      "homepage": "https://github.com/sindresorhus/object-assign#readme",
+      "description": "ES2015 `Object.assign()` ponyfill"
+    },
+    {
+      "name": "prop-types",
+      "versions": [
+        "15.8.1"
+      ],
+      "license": "MIT",
+      "homepage": "https://facebook.github.io/react/",
+      "description": "Runtime type checking for React props and similar objects."
+    },
+    {
+      "name": "react",
+      "versions": [
+        "19.2.8"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "React is a JavaScript library for building user interfaces."
+    },
+    {
+      "name": "react-dom",
+      "versions": [
+        "19.2.8"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "React package for working with the DOM."
+    },
+    {
+      "name": "react-dropzone",
+      "versions": [
+        "15.0.0"
+      ],
+      "license": "MIT",
+      "author": "Param Aggarwal",
+      "homepage": "https://github.com/react-dropzone/react-dropzone",
+      "description": "Simple HTML5 drag-drop zone with React.js"
+    },
+    {
+      "name": "react-is",
+      "versions": [
+        "16.13.1"
+      ],
+      "license": "MIT",
+      "homepage": "https://reactjs.org/",
+      "description": "Brand checking of React Elements."
+    },
+    {
+      "name": "react-number-format",
+      "versions": [
+        "5.4.5"
+      ],
+      "license": "MIT",
+      "author": "Sudhanshu Yadav",
+      "homepage": "https://s-yadav.github.io/react-number-format/docs/intro",
+      "description": "React component to format number in an input or as a text."
+    },
+    {
+      "name": "react-remove-scroll",
+      "versions": [
+        "2.7.2"
+      ],
+      "license": "MIT",
+      "author": "Anton Korzunov",
+      "homepage": "https://github.com/theKashey/react-remove-scroll#readme",
+      "description": "Disables scroll outside of `children` node."
+    },
+    {
+      "name": "react-remove-scroll-bar",
+      "versions": [
+        "2.3.8"
+      ],
+      "license": "MIT",
+      "author": "Anton Korzunov",
+      "homepage": "https://github.com/theKashey/react-remove-scroll-bar#readme",
+      "description": "Removes body scroll without content _shake_"
+    },
+    {
+      "name": "react-style-singleton",
+      "versions": [
+        "2.2.3"
+      ],
+      "license": "MIT",
+      "author": "Anton Korzunov",
+      "homepage": "https://github.com/theKashey/react-style-singleton#readme",
+      "description": "Just create a single stylesheet..."
+    },
+    {
+      "name": "scheduler",
+      "versions": [
+        "0.27.0"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "Cooperative scheduler for the browser environment."
+    },
+    {
+      "name": "tabbable",
+      "versions": [
+        "6.5.0"
+      ],
+      "license": "MIT",
+      "author": "David Clark",
+      "homepage": "https://github.com/focus-trap/tabbable#readme",
+      "description": "Returns an array of all tabbable DOM nodes within a containing node."
+    },
+    {
+      "name": "tagged-tag",
+      "versions": [
+        "1.0.0"
+      ],
+      "license": "MIT",
+      "author": "Sindre Sorhus",
+      "homepage": "https://github.com/sindresorhus/tagged-tag#readme",
+      "description": "Unique tag for use in the type-fest Tagged type"
+    },
+    {
+      "name": "use-callback-ref",
+      "versions": [
+        "1.3.3"
+      ],
+      "license": "MIT",
+      "author": "theKashey",
+      "homepage": "https://github.com/theKashey/use-callback-ref#readme",
+      "description": "The same useRef, but with callback"
+    },
+    {
+      "name": "use-sidecar",
+      "versions": [
+        "1.1.3"
+      ],
+      "license": "MIT",
+      "author": "theKashey",
+      "homepage": "https://github.com/theKashey/use-sidecar",
+      "description": "Sidecar code splitting utils"
+    }
+  ],
+  "Apache-2.0 OR MIT": [
+    {
+      "name": "@tauri-apps/api",
+      "versions": [
+        "2.11.1"
+      ],
+      "license": "Apache-2.0 OR MIT",
+      "homepage": "https://github.com/tauri-apps/tauri#readme",
+      "description": "Tauri API definitions"
+    }
+  ],
+  "MIT OR Apache-2.0": [
+    {
+      "name": "@tauri-apps/plugin-dialog",
+      "versions": [
+        "2.7.2"
+      ],
+      "license": "MIT OR Apache-2.0",
+      "homepage": "https://github.com/tauri-apps/plugins-workspace#readme"
+    },
+    {
+      "name": "@tauri-apps/plugin-log",
+      "versions": [
+        "2.9.0"
+      ],
+      "license": "MIT OR Apache-2.0",
+      "homepage": "https://github.com/tauri-apps/plugins-workspace#readme",
+      "description": "Configurable logging for your Tauri app."
+    },
+    {
+      "name": "@tauri-apps/plugin-opener",
+      "versions": [
+        "2.5.4"
+      ],
+      "license": "MIT OR Apache-2.0",
+      "homepage": "https://github.com/tauri-apps/plugins-workspace#readme",
+      "description": "Open files and URLs using their default application."
+    }
+  ],
+  "ISC": [
+    {
+      "name": "react-image-crop",
+      "versions": [
+        "11.1.2"
+      ],
+      "license": "ISC",
+      "author": "Dominic Tobias",
+      "homepage": "https://github.com/dominictobias/react-image-crop#readme",
+      "description": "A responsive image cropping tool for React"
+    }
+  ],
+  "0BSD": [
+    {
+      "name": "tslib",
+      "versions": [
+        "2.8.1"
+      ],
+      "license": "0BSD",
+      "author": "Microsoft Corp.",
+      "homepage": "https://www.typescriptlang.org/",
+      "description": "Runtime library for TypeScript helper functions"
+    }
+  ],
+  "(MIT OR CC0-1.0)": [
+    {
+      "name": "type-fest",
+      "versions": [
+        "5.8.0"
+      ],
+      "license": "(MIT OR CC0-1.0)",
+      "author": "Sindre Sorhus",
+      "homepage": "https://github.com/sindresorhus/type-fest#readme",
+      "description": "A collection of essential TypeScript types"
+    }
+  ]
+}

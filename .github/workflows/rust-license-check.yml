@@ -1,0 +1,44 @@
+name: Rust License Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src-tauri/Cargo.lock"
+      - "src-tauri/Cargo.toml"
+
+  pull_request:
+    branches: [main]
+    paths:
+      - "src-tauri/Cargo.lock"
+      - "src-tauri/Cargo.toml"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    name: Rust License Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@46511b1c83438f0dd37c02d843619ece5a4abb5b # 1.97.1
+
+      - name: Install cargo-about and cargo-deny
+        uses: taiki-e/install-action@7f4eb899022d8fe70b20c4f3de697aa85c309026 # v2.85.11
+        with:
+          tool: cargo-about,cargo-deny
+
+      - name: Generate third-party license file
+        run: cd src-tauri && cargo about generate about.hbs -o ../licenses/rust-licenses.html
+
+      - name: Check diff
+        run: |
+          git add .
+          git diff --cached --exit-code -w -- licenses/rust-licenses.html
+
+      - name: Check for license policy violations
+        run: cd src-tauri && cargo deny check licenses
