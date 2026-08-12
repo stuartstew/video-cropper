@@ -36,7 +36,7 @@ pub struct FrontendLicense {
 #[command]
 #[allow(clippy::needless_pass_by_value, reason = "needed")]
 pub fn read_frontend_licenses(app: AppHandle) -> Result<Vec<FrontendLicense>, Error> {
-    let licenses_path = app.path().resource_dir()?.join("_up_/licenses/frontend-licenses.json");
+    let licenses_path = app.path().resource_dir()?.join("licenses/frontend-licenses.json");
     let file = File::open(licenses_path)?;
     let reader = BufReader::new(file);
 

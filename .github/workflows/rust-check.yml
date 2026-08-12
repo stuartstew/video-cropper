@@ -6,11 +6,14 @@ on:
     paths:
       - "src-tauri/**"
       - "!src-tauri/icons/**"
+      - "!src-tauri/licenses/**"
+
   pull_request:
     branches: [main]
     paths:
       - "src-tauri/**"
       - "!src-tauri/icons/**"
+      - "!src-tauri/licenses/**"
 
 env:
   CARGO_TERM_COLOR: always
