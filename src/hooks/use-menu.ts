@@ -8,15 +8,19 @@ const GITHUB_REPOSITORY_URL = "https://github.com/stuartstew/video-cropper";
 type Props = {
   onOpen: () => void;
   onClose: () => void;
+  onOpenLicenseModal: () => void;
 };
 
-export const useMenu = ({ onOpen, onClose }: Props) => {
+export const useMenu = ({ onOpen, onClose, onOpenLicenseModal }: Props) => {
   // Prevents menu from being re-rendered when event handlers change
   const onOpenRef = useRef(onOpen);
   onOpenRef.current = onOpen;
 
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
+
+  const onOpenLicenseModalRef = useRef(onOpenLicenseModal);
+  onOpenLicenseModalRef.current = onOpenLicenseModal;
 
   useEffect(() => {
     const showAppInfoDialog = async () => {
@@ -66,7 +70,7 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
           await MenuItem.new({
             id: "licenses",
             text: "Licenses",
-            action: () => {},
+            action: onOpenLicenseModalRef.current,
           }),
           await MenuItem.new({
             id: "about",
