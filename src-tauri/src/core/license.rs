@@ -39,7 +39,6 @@ pub fn read_frontend_licenses(app: AppHandle) -> Result<Vec<FrontendLicense>, Er
     let licenses_path = app.path().resource_dir()?.join("licenses/frontend-licenses.json");
     let file = File::open(licenses_path)?;
     let reader = BufReader::new(file);
-
     let value: Value = serde_json::from_reader(reader)?;
     parse_frontend_licenses_json(&value)
 }
