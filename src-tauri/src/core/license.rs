@@ -60,6 +60,13 @@ fn parse_frontend_licenses_json(value: &serde_json::Value) -> Result<Vec<Fronten
     Ok(licenses)
 }
 
+#[command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn read_rust_licenses_html(app: AppHandle) -> Result<String, Error> {
+    let licenses_path = app.path().resource_dir()?.join("licenses/rust-licenses.html");
+    Ok(std::fs::read_to_string(licenses_path)?)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
