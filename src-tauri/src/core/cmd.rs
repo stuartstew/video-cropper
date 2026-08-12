@@ -1,5 +1,3 @@
-#![warn(clippy::pedantic)]
-
 use std::io::{Read, Write};
 
 use anyhow::anyhow;

@@ -1,4 +1,5 @@
-import { Modal, Tabs } from "@mantine/core";
+import { DataList, Modal, Tabs } from "@mantine/core";
+import { useLicenses } from "./hooks/use-licenses";
 
 type Props = {
   opened: boolean;
@@ -6,6 +7,8 @@ type Props = {
 };
 
 export const LicenseModal = ({ opened, onClose }: Props) => {
+  const { frontendLicenses } = useLicenses();
+
   return (
     <Modal opened={opened} onClose={onClose} title="Licenses" fullScreen>
       <Tabs defaultValue="frontend">
@@ -15,7 +18,14 @@ export const LicenseModal = ({ opened, onClose }: Props) => {
         </Tabs.List>
 
         <Tabs.Panel value="frontend" mx="md">
-          Frontend Licenses
+          <DataList orientation="horizontal">
+            {frontendLicenses.map((lib) => (
+              <DataList.Item key={lib.name}>
+                <DataList.ItemLabel miw={0}>{`${lib.name} (${lib.versions[0]})`}</DataList.ItemLabel>
+                <DataList.ItemValue>{lib.license}</DataList.ItemValue>
+              </DataList.Item>
+            ))}
+          </DataList>
         </Tabs.Panel>
 
         <Tabs.Panel value="rust" mx="md">
