@@ -4,6 +4,7 @@
 
 mod core;
 use core::cmd;
+use core::license;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 fn main() {
@@ -14,7 +15,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             cmd::extract_first_frame,
             cmd::fetch_frame_count,
-            cmd::save_cropped_video
+            cmd::save_cropped_video,
+            license::read_frontend_licenses,
+            license::read_rust_licenses_html
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

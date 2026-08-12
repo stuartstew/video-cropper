@@ -8,9 +8,10 @@ const GITHUB_REPOSITORY_URL = "https://github.com/stuartstew/video-cropper";
 type Props = {
   onOpen: () => void;
   onClose: () => void;
+  onOpenLicenseModal: () => void;
 };
 
-export const useMenu = ({ onOpen, onClose }: Props) => {
+export const useMenu = ({ onOpen, onClose, onOpenLicenseModal }: Props) => {
   // Prevents menu from being re-rendered when event handlers change
   const onOpenRef = useRef(onOpen);
   onOpenRef.current = onOpen;
@@ -18,11 +19,24 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
+  const onOpenLicenseModalRef = useRef(onOpenLicenseModal);
+  onOpenLicenseModalRef.current = onOpenLicenseModal;
+
   useEffect(() => {
     const showAppInfoDialog = async () => {
       const name = await getName();
       const version = await getVersion();
-      const appInfoMessage = `${name}\n${version}\n${GITHUB_REPOSITORY_URL}\n\nLicensed under the MIT License.`;
+      const appInfoMessage = `
+        ${name}
+        ${version}
+        ${GITHUB_REPOSITORY_URL}
+
+        Copyright (c) 2026 stuartstew
+        Licensed under the MIT License.
+      `
+        .trim()
+        .replace(/^[^\S\r\n]+/gm, "");
+
       await message(appInfoMessage);
     };
 
@@ -53,6 +67,11 @@ export const useMenu = ({ onOpen, onClose }: Props) => {
       const helpSubmenu = await Submenu.new({
         text: "Help",
         items: [
+          await MenuItem.new({
+            id: "licenses",
+            text: "Licenses",
+            action: onOpenLicenseModalRef.current,
+          }),
           await MenuItem.new({
             id: "about",
             text: "About VideoCropper",

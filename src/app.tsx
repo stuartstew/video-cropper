@@ -2,11 +2,13 @@ import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 
 import { MantineProvider } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import type { ImageSize } from "@tauri-apps/api/image";
 import { useState } from "react";
 import type { PixelCrop } from "react-image-crop";
 import { CompletedModal } from "./components/completed-modal";
 import { CropSelector } from "./components/crop-selector";
+import { LicenseModal } from "./components/license-modal";
 import { ProgressModal } from "./components/progress-modal";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useMenu } from "./hooks/use-menu";
@@ -26,11 +28,13 @@ const App = () => {
   };
 
   const fileDialog = useVideoFileDialog(changeVideoFile);
+  const [isLicenseModalOpened, { open: openLicenseModal, close: closeLicenseModal }] = useDisclosure(false);
 
-  useMenu({ onOpen: fileDialog.open, onClose: closeVideoFile });
+  useMenu({ onOpen: fileDialog.open, onClose: closeVideoFile, onOpenLicenseModal: openLicenseModal });
 
   return (
     <MantineProvider defaultColorScheme="dark">
+      <LicenseModal opened={isLicenseModalOpened} onClose={closeLicenseModal} />
       <CompletedModal processStatus={processStatus} onClose={closeCompletedModal} />
       <ProgressModal processStatus={processStatus} />
       <CropSelector

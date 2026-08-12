@@ -39,4 +39,4 @@ jobs:
       - name: Check diff
         run: |
           git add .
-          git diff --cached --exit-code -- licenses/frontend-licenses.json
+          git diff --cached --exit-code -- src-tauri/licenses/frontend-licenses.json
