@@ -13,8 +13,8 @@ export const LicenseModal = ({ opened, onClose }: Props) => {
     <Modal opened={opened} onClose={onClose} title="Licenses" fullScreen>
       <Tabs defaultValue="frontend">
         <Tabs.List mb="xl">
-          <Tabs.Tab value="frontend">Frontend Licenses</Tabs.Tab>
-          <Tabs.Tab value="rust">Rust Licenses</Tabs.Tab>
+          <Tabs.Tab value="frontend">Frontend Dependencies</Tabs.Tab>
+          <Tabs.Tab value="rust">Rust Dependencies</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="frontend" mx="md">
