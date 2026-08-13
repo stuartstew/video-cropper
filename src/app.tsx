@@ -12,6 +12,7 @@ import { CropSelector } from "./components/crop-selector";
 import { LicenseModal } from "./components/license-modal";
 import { ProgressModal } from "./components/progress-modal";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
+import { useLicenses } from "./hooks/use-licenses";
 import { useSaveCrop } from "./hooks/use-save-crop";
 import { useVideoFileDialog } from "./hooks/use-video-file-dialog";
 
@@ -28,11 +29,20 @@ const App = () => {
   };
 
   const fileDialog = useVideoFileDialog(changeVideoFile);
-  const [isLicenseModalOpened, { open: openLicenseModal, close: closeLicenseModal }] = useDisclosure(false);
+
+  const { frontendLicenses, rustLicensesHTML, loadLicenses } = useLicenses();
+  const [isLicenseModalOpened, { open: openLicenseModal, close: closeLicenseModal }] = useDisclosure(false, {
+    onOpen: loadLicenses,
+  });
 
   return (
     <MantineProvider defaultColorScheme="dark">
-      <LicenseModal opened={isLicenseModalOpened} onClose={closeLicenseModal} />
+      <LicenseModal
+        frontendLicenses={frontendLicenses}
+        rustLicensesHTML={rustLicensesHTML}
+        opened={isLicenseModalOpened}
+        onClose={closeLicenseModal}
+      />
       <CompletedModal processStatus={processStatus} onClose={closeCompletedModal} />
       <ProgressModal processStatus={processStatus} />
       <Stack h="100vh" gap={0}>

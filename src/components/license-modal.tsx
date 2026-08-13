@@ -1,14 +1,14 @@
 import { DataList, Modal, Tabs } from "@mantine/core";
-import { useLicenses } from "./hooks/use-licenses";
+import type { FrontendLicense } from "../types/frontend-license";
 
 type Props = {
+  frontendLicenses: FrontendLicense[];
+  rustLicensesHTML: string;
   opened: boolean;
   onClose: () => void;
 };
 
-export const LicenseModal = ({ opened, onClose }: Props) => {
-  const { frontendLicenses, rustLicensesHTML } = useLicenses();
-
+export const LicenseModal = ({ frontendLicenses, rustLicensesHTML, opened, onClose }: Props) => {
   return (
     <Modal opened={opened} onClose={onClose} title="Licenses" fullScreen>
       <Tabs defaultValue="frontend">
