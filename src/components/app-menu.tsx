@@ -6,12 +6,14 @@ import { message } from "@tauri-apps/plugin-dialog";
 const GITHUB_REPOSITORY_URL = "https://github.com/stuartstew/video-cropper";
 
 type Props = {
+  loading: boolean;
+  isFileOpened: boolean;
   onOpen: () => void;
   onClose: () => void;
   onOpenLicenseModal: () => void;
 };
 
-export const AppMenu = ({ onOpen, onClose, onOpenLicenseModal }: Props) => {
+export const AppMenu = ({ loading, isFileOpened, onOpen, onClose, onOpenLicenseModal }: Props) => {
   const handleExit = async () => {
     const window = getCurrentWindow();
     await window.close();
@@ -39,8 +41,12 @@ export const AppMenu = ({ onOpen, onClose, onOpenLicenseModal }: Props) => {
       <Menubar.Menu width={240}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>
-          <Menu.Item onClick={onOpen}>Open</Menu.Item>
-          <Menu.Item onClick={onClose}>Close</Menu.Item>
+          <Menu.Item onClick={onOpen} disabled={loading}>
+            Open
+          </Menu.Item>
+          <Menu.Item onClick={onClose} disabled={loading || !isFileOpened}>
+            Close
+          </Menu.Item>
           <Menu.Divider />
           <Menu.Item onClick={handleExit}>Exit</Menu.Item>
         </Menubar.Dropdown>

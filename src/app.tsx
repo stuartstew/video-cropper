@@ -36,7 +36,13 @@ const App = () => {
       <CompletedModal processStatus={processStatus} onClose={closeCompletedModal} />
       <ProgressModal processStatus={processStatus} />
       <Stack h="100vh" gap={0}>
-        <AppMenu onOpen={fileDialog.open} onClose={closeVideoFile} onOpenLicenseModal={openLicenseModal} />
+        <AppMenu
+          loading={loading}
+          isFileOpened={videoFile != null}
+          onOpen={fileDialog.open}
+          onClose={closeVideoFile}
+          onOpenLicenseModal={openLicenseModal}
+        />
         <CropSelector
           key={key}
           videoFile={videoFile}
