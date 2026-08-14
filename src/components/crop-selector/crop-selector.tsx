@@ -26,7 +26,7 @@ export const CropSelector = ({ videoFile, frameUrl, frameSize, loading, onChange
 
   return (
     <Stack flex={1} gap={0}>
-      {!loading && videoFile ? (
+      {videoFile ? (
         <DragCropSelector
           percentCrop={percentCrop}
           onChangePercentCrop={changePercentCrop}
