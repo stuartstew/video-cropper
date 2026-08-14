@@ -2,12 +2,12 @@ import { Box, Group, Stack } from "@mantine/core";
 import type { FileWithPath } from "@mantine/dropzone";
 import type { ImageSize } from "@tauri-apps/api/image";
 import type { PixelCrop } from "react-image-crop";
-import { useCrop } from "../hooks/use-crop";
-import { CropButton } from "./crop-button";
-import { DragCropSelector } from "./drag-crop-selector";
-import { ManualCropInput } from "./manual-crop-input";
-import { ResetButton } from "./reset-button";
-import { VideoDropzone } from "./video-dropzone";
+import { CropButton } from "./components/crop-button";
+import { DragCropSelector } from "./components//drag-crop-selector";
+import { ManualCropInput } from "./components//manual-crop-input";
+import { ResetButton } from "./components//reset-button";
+import { VideoDropzone } from "./components/video-dropzone";
+import { useCrop } from "./hooks/use-crop";
 
 type Props = {
   videoFile?: FileWithPath;
