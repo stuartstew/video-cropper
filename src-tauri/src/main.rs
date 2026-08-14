@@ -13,6 +13,7 @@ fn main() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
+            cmd::warn_if_ffmpeg_is_not_installed,
             cmd::extract_first_frame,
             cmd::fetch_frame_count,
             cmd::save_cropped_video,

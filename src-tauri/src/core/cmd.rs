@@ -1,9 +1,10 @@
 use std::io::{Read, Write};
 
 use anyhow::anyhow;
-use ffmpeg_sidecar::command::FfmpegCommand;
+use ffmpeg_sidecar::command::{FfmpegCommand, ffmpeg_is_installed};
 use regex::Regex;
 use tauri::{AppHandle, Emitter, command};
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 use tempfile::{NamedTempFile, TempPath};
 
 #[derive(Debug, thiserror::Error)]
@@ -22,6 +23,19 @@ impl serde::Serialize for Error {
         S: serde::ser::Serializer,
     {
         serializer.serialize_str(self.to_string().as_ref())
+    }
+}
+
+#[command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn warn_if_ffmpeg_is_not_installed(app: AppHandle) {
+    if !ffmpeg_is_installed() {
+        log::warn!("ffmpeg is not installed");
+
+        let message = "This application requires FFmpeg, which was not detected on your system.\n\
+                       Please install FFmpeg and restart the application.";
+
+        app.dialog().message(message).kind(MessageDialogKind::Warning).blocking_show();
     }
 }
 

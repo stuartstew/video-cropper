@@ -11,6 +11,7 @@ import { CompletedModal } from "./components/completed-modal";
 import { CropSelector } from "./components/crop-selector";
 import { LicenseModal } from "./components/license-modal";
 import { ProgressModal } from "./components/progress-modal";
+import { useFfmpegCheck } from "./hooks/use-ffmpeg-check";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useLicenses } from "./hooks/use-licenses";
 import { useSaveCrop } from "./hooks/use-save-crop";
@@ -34,6 +35,8 @@ const App = () => {
   const [isLicenseModalOpened, { open: openLicenseModal, close: closeLicenseModal }] = useDisclosure(false, {
     onOpen: loadLicenses,
   });
+
+  useFfmpegCheck();
 
   return (
     <MantineProvider defaultColorScheme="dark">
