@@ -15,7 +15,6 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
   const changeVideoFile = async (file?: FileWithPath) => {
     if (!file) return;
 
-    setVideoFile(file);
     setLoading(true);
 
     info(`opening "${file.name}"`);
@@ -25,6 +24,8 @@ export const useFrameExtraction = (onChangeFrameSize: (size: ImageSize) => void)
 
     invoke<number[]>("extract_first_frame", { inputBytes: bytes })
       .then(async (outputBytes) => {
+        setVideoFile(file);
+
         const outputByteArray = new Uint8Array(outputBytes);
         const blob = new Blob([outputByteArray], { type: "image/png" });
         const url = URL.createObjectURL(blob);

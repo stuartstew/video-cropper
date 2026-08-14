@@ -19,12 +19,13 @@ export const DragCropSelector = ({ percentCrop, onChangePercentCrop, frameSize, 
 
   return (
     <Center ref={containerRef} display="flex" flex={1} bg="#000" style={{ overflow: "hidden" }}>
-      {frameSize && !loading && (
+      {frameSize && (
         <Cropper
           percentCrop={percentCrop}
           onChangePercentCrop={onChangePercentCrop}
           containerRef={containerRef}
           frameSize={frameSize}
+          loading={loading}
         >
           <Image src={frameUrl} />
         </Cropper>
