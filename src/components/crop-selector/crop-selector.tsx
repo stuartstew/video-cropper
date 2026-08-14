@@ -10,6 +10,7 @@ import { VideoDropzone } from "./components/video-dropzone";
 import { useCrop } from "./hooks/use-crop";
 
 type Props = {
+  openRef: React.RefObject<(() => void) | null>;
   videoFile?: FileWithPath;
   frameUrl?: string;
   frameSize: ImageSize;
@@ -18,7 +19,15 @@ type Props = {
   onSave: (pixelCrop: PixelCrop) => void;
 };
 
-export const CropSelector = ({ videoFile, frameUrl, frameSize, loading, onChangeVideoFile, onSave }: Props) => {
+export const CropSelector = ({
+  openRef,
+  videoFile,
+  frameUrl,
+  frameSize,
+  loading,
+  onChangeVideoFile,
+  onSave,
+}: Props) => {
   const { pixelCrop, percentCrop, changePixelCrop, changePercentCrop, reset } = useCrop(frameSize);
 
   const disabled = !videoFile;
@@ -35,7 +44,7 @@ export const CropSelector = ({ videoFile, frameUrl, frameSize, loading, onChange
           frameUrl={frameUrl}
         />
       ) : (
-        <VideoDropzone onChangeVideoFile={onChangeVideoFile} loading={loading} />
+        <VideoDropzone openRef={openRef} onChangeVideoFile={onChangeVideoFile} loading={loading} />
       )}
       <Group px="xl" pt="md" pb="lg" justify="space-between" align="flex-end">
         <ManualCropInput pixelCrop={pixelCrop} onChangePixelCrop={changePixelCrop} disabled={loading || disabled} />

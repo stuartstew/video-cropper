@@ -3,14 +3,16 @@ import { Dropzone, type FileWithPath } from "@mantine/dropzone";
 import { UploadSimpleIcon, VideoIcon, XIcon } from "@phosphor-icons/react";
 
 type Props = {
+  openRef: React.RefObject<(() => void) | null>;
   onChangeVideoFile: (value: FileWithPath) => void;
   loading: boolean;
 };
 
-export const VideoDropzone = ({ onChangeVideoFile, loading }: Props) => {
+export const VideoDropzone = ({ openRef, onChangeVideoFile, loading }: Props) => {
   return (
     <Box display="flex" flex={1} bg="#000" px="md" py="md">
       <Dropzone
+        openRef={openRef}
         accept={["video/*"]}
         multiple={false}
         onDrop={(files) => onChangeVideoFile(files[0])}

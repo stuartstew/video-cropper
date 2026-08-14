@@ -4,7 +4,7 @@ import "@mantine/dropzone/styles.css";
 import { MantineProvider, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import type { ImageSize } from "@tauri-apps/api/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { PixelCrop } from "react-image-crop";
 import { AppMenu } from "./components/app-menu";
 import { CompletedModal } from "./components/completed-modal";
@@ -15,7 +15,6 @@ import { useFfmpegCheck } from "./hooks/use-ffmpeg-check";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useLicenses } from "./hooks/use-licenses";
 import { useSaveCrop } from "./hooks/use-save-crop";
-import { useVideoFileDialog } from "./hooks/use-video-file-dialog";
 
 const App = () => {
   const [frameSize, setFrameSize] = useState<ImageSize>();
@@ -29,7 +28,7 @@ const App = () => {
     }
   };
 
-  const fileDialog = useVideoFileDialog(changeVideoFile);
+  const openRef = useRef<() => void>(null);
 
   const { frontendLicenses, rustLicensesHTML, loadLicenses } = useLicenses();
   const [isLicenseModalOpened, { open: openLicenseModal, close: closeLicenseModal }] = useDisclosure(false, {
@@ -52,12 +51,13 @@ const App = () => {
         <AppMenu
           loading={loading}
           isFileOpened={videoFile != null}
-          onOpen={fileDialog.open}
+          onOpen={() => openRef.current?.()}
           onClose={closeVideoFile}
           onOpenLicenseModal={openLicenseModal}
         />
         <CropSelector
           key={key}
+          openRef={openRef}
           videoFile={videoFile}
           frameUrl={frameUrl}
           frameSize={frameSize ?? { height: 0, width: 0 }}
