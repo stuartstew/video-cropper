@@ -1,13 +1,13 @@
-import { Box, Group, Stack } from "@mantine/core";
+import { Group, Stack } from "@mantine/core";
 import type { FileWithPath } from "@mantine/dropzone";
 import type { ImageSize } from "@tauri-apps/api/image";
 import type { PixelCrop } from "react-image-crop";
-import { useCrop } from "../hooks/use-crop";
-import { CropButton } from "./crop-button";
-import { DragCropSelector } from "./drag-crop-selector";
-import { ManualCropInput } from "./manual-crop-input";
-import { ResetButton } from "./reset-button";
-import { VideoDropzone } from "./video-dropzone";
+import { CropButton } from "./components/crop-button";
+import { DragCropSelector } from "./components//drag-crop-selector";
+import { ManualCropInput } from "./components//manual-crop-input";
+import { ResetButton } from "./components//reset-button";
+import { VideoDropzone } from "./components/video-dropzone";
+import { useCrop } from "./hooks/use-crop";
 
 type Props = {
   videoFile?: FileWithPath;
@@ -37,11 +37,12 @@ export const CropSelector = ({ videoFile, frameUrl, frameSize, loading, onChange
       ) : (
         <VideoDropzone onChangeVideoFile={onChangeVideoFile} loading={loading} />
       )}
-      <Group px="xl" pt="md" pb="lg" gap="md" align="flex-end">
+      <Group px="xl" pt="md" pb="lg" justify="space-between" align="flex-end">
         <ManualCropInput pixelCrop={pixelCrop} onChangePixelCrop={changePixelCrop} disabled={loading || disabled} />
-        <Box flex={1} />
-        <ResetButton onClick={reset} disabled={loading || disabled || isDefault} />
-        <CropButton onClick={() => onSave(pixelCrop)} disabled={loading || disabled} />
+        <Group gap="md">
+          <ResetButton onClick={reset} disabled={loading || disabled || isDefault} />
+          <CropButton onClick={() => onSave(pixelCrop)} disabled={loading || disabled} />
+        </Group>
       </Group>
     </Stack>
   );
