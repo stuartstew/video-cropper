@@ -2,6 +2,9 @@
   <img width="128" src="./src-tauri/icons/icon.png" alt="VideoCropper">
   <br />
   <h1 align="center">VideoCropper</h1>
+
+  [![License](https://img.shields.io/github/license/stuartstew/video-cropper?style=flat-square)](/LICENSE)
+  [![GitHub Release](https://img.shields.io/github/v/release/stuartstew/video-cropper?style=flat-square)](https://github.com/stuartstew/video-cropper/releases)
 </div>
 
 VideoCropper is a desktop app that allows you to crop videos.
