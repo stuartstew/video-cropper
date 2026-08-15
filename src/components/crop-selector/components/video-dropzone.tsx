@@ -6,11 +6,12 @@ type Props = {
   openRef: React.RefObject<(() => void) | null>;
   onChangeVideoFile: (value: FileWithPath) => void;
   loading: boolean;
+  visible: boolean;
 };
 
-export const VideoDropzone = ({ openRef, onChangeVideoFile, loading }: Props) => {
+export const VideoDropzone = ({ openRef, onChangeVideoFile, loading, visible }: Props) => {
   return (
-    <Box display="flex" flex={1} bg="#000" px="md" py="md">
+    <Box display={visible ? "flex" : "none"} flex={1} bg="#000" px="md" py="md">
       <Dropzone
         openRef={openRef}
         accept={["video/*"]}

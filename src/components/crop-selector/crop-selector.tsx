@@ -35,7 +35,14 @@ export const CropSelector = ({
 
   return (
     <Stack flex={1} gap={0}>
-      {videoFile ? (
+      {/* We need to render the dropzone to enable the file browser to be opened from outside */}
+      <VideoDropzone
+        openRef={openRef}
+        onChangeVideoFile={onChangeVideoFile}
+        loading={loading}
+        visible={videoFile == null}
+      />
+      {videoFile && (
         <DragCropSelector
           percentCrop={percentCrop}
           onChangePercentCrop={changePercentCrop}
@@ -43,8 +50,6 @@ export const CropSelector = ({
           loading={loading}
           frameUrl={frameUrl}
         />
-      ) : (
-        <VideoDropzone openRef={openRef} onChangeVideoFile={onChangeVideoFile} loading={loading} />
       )}
       <Group px="xl" pt="md" pb="lg" justify="space-between" align="flex-end">
         <ManualCropInput pixelCrop={pixelCrop} onChangePixelCrop={changePixelCrop} disabled={loading || disabled} />
