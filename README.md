@@ -8,6 +8,9 @@ VideoCropper is a desktop app that allows you to crop videos.
 
 **Requires [FFmpeg](https://www.ffmpeg.org).**
 
+## Screenshot
+![Screenshot in Windows 11](./docs/screenshots/win11_1.png)
+
 ## Development
 
 ### Prerequisites
