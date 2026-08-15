@@ -11,6 +11,13 @@ VideoCropper is a desktop app that allows you to crop videos.
 ## Screenshot
 ![Screenshot in Windows 11](./docs/screenshots/win11_1.png)
 
+## Tech Stack
+
+- **Desktop Framework:** Tauri
+- **Backend:** Rust
+- **Frontend:** Vite + React + TypeScript
+- **UI Library:** Mantine
+
 ## Development
 
 ### Prerequisites
@@ -36,6 +43,10 @@ pnpm tauri dev
 # Build for production
 pnpm tauri build
 ```
+
+## Important Notes
+
+- Only tested on Windows 11.
 
 ## Credits
 
