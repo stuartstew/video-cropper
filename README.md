@@ -1,7 +1,7 @@
 <div align="center">
   <img width="128" src="./src-tauri/icons/icon.png" alt="VideoCropper">
   <br />
-  <h1 align="center">Video Cropper</h1>
+  <h1 align="center">VideoCropper</h1>
 </div>
 
 VideoCropper is a desktop app that allows you to crop videos.
