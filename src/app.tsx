@@ -15,6 +15,7 @@ import { useFfmpegCheck } from "./hooks/use-ffmpeg-check";
 import { useFrameExtraction } from "./hooks/use-frame-extraction";
 import { useLicenses } from "./hooks/use-licenses";
 import { useSaveCrop } from "./hooks/use-save-crop";
+import { theme } from "./theme";
 
 const App = () => {
   const [frameSize, setFrameSize] = useState<ImageSize>();
@@ -38,7 +39,7 @@ const App = () => {
   useFfmpegCheck();
 
   return (
-    <MantineProvider defaultColorScheme="dark">
+    <MantineProvider forceColorScheme="dark" theme={theme}>
       <LicenseModal
         frontendLicenses={frontendLicenses}
         rustLicensesHTML={rustLicensesHTML}
