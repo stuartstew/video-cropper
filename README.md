@@ -37,6 +37,10 @@ pnpm tauri dev
 pnpm tauri build
 ```
 
+## Important Notes
+
+- Only tested on Windows 11.
+
 ## Credits
 
 - Icon: "crop" by [Phosphor Icons](https://phosphoricons.com) - MIT License
